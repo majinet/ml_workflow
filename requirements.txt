@@ -1,0 +1,10 @@
+kfp
+pandas
+scikit-learn
+minio
+numpy
+feast
+matplotlib
+seaborn
+xgboost
+category-encoders
