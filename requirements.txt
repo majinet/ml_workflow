@@ -8,3 +8,5 @@ matplotlib
 seaborn
 xgboost
 category-encoders
+SQLAlchemy==2.0.5.post1
+alembic

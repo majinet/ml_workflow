@@ -1,64 +1,0 @@
-
-A
-!
-__dummy"
-__dummy_idJ
-feast_demo
-·ıœ §î°·ıœ §î°
-D
-$
-	passenger"PassengerIdJ
-feast_demo
-ğ‰ ˜§ øğ‰ ˜§ ø1"$6b1d1552-b143-4bb3-b7c8-219989cd9816*¸± ¨êÔÔ2ô
-Ó
-titanic_survive_fv
-feast_demo	passenger"
-PC1"
-PC2"
-PC3"
-PC4"
-PC5*
-teamtitanic_survive_view:Çevent_timestampZig/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢titanic_pca_source@b
-PassengerId
-¿’ è¶Û‘¿’ è¶Û‘2Ğ
-¯
-titanic_survive_fresh
-feast_demo	passenger"
-PC1"
-PC2"
-PC3"
-PC4"
-PC5*
-teamtitanic_survive_view:Çevent_timestampZig/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢titanic_pca_source@JÖ	Šfeast.data_source.PushSource¢titanic_survive_push_sourceÒ“event_timestampZig/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquet¢titanic_pca_sourceb
-PassengerId
-¿’ ØÂ´”¿’ ØÂ´”:Š
-j
-titanic_survive_svc_v2
-feast_demoD
-titanic_survive_fresh
-PC1
-PC2
-PC3
-PC4
-PC5
-¿’ Ğ‚à–¿’ Ğ‚à–:‡
-g
-titanic_survive_svc_v1
-feast_demoA
-titanic_survive_fv
-PC1
-PC2
-PC3
-PC4
-PC5
-¿’  Äù–¿’  Äù–Rá
-¯
-,feast.infra.online_stores.sqlite.SqliteTable"
-[/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/online_store.db feast_demo_titanic_survive_fresh
-¬
-,feast.infra.online_stores.sqlite.SqliteTable"|
-[/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/online_store.dbfeast_demo_titanic_survive_fvbÔevent_timestampZig/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquetŠ1feast.infra.offline_stores.file_source.FileSource¢titanic_pca_sourceª
-feast_demobã	Šfeast.data_source.PushSource¢titanic_survive_push_sourceª
-feast_demoÒ“event_timestampZig/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquet¢titanic_pca_sourcez2
-
-feast_demo$88d00c04-8643-4d4e-8c57-fc8565c6555e
