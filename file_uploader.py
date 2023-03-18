@@ -32,18 +32,18 @@ def main():
     # Upload '/home/user/Photos/asiaphotos.zip' as object name
     # 'asiaphotos-2015.zip' to bucket 'asiatrip'.
 
-    df_titanic_train = read_csv("input/fe-course-data/titanic_train.csv")
-    to_parquet("feast_demo/feature_repo/data/titanic_train.parquet", df_titanic_train)
+    df_titanic_train = read_csv("titanic_feature/feature_repo/data/train.csv")
+    to_parquet("titanic_feature/feature_repo/data/titanic_train.parquet", df_titanic_train)
 
     client.fput_object(
-        "demo-bucket", "titanic_train.parquet", "feast_demo/feature_repo/data/titanic_train.parquet",
+        "demo-bucket", "titanic_train.parquet", "titanic_feature/feature_repo/data/titanic_train.parquet",
     )
 
-    df_titanic_test = read_csv("input/fe-course-data/titanic_test.csv")
-    to_parquet("feast_demo/feature_repo/data/titanic_test.parquet", df_titanic_test)
+    df_titanic_test = read_csv("titanic_feature/feature_repo/data/test.csv")
+    to_parquet("titanic_feature/feature_repo/data/titanic_test.parquet", df_titanic_test)
 
     client.fput_object(
-        "demo-bucket", "titanic_test.parquet", "feast_demo/feature_repo/data/titanic_test.parquet",
+        "demo-bucket", "titanic_test.parquet", "titanic_feature/feature_repo/data/titanic_test.parquet",
     )
     print(
         "'input/fe-course-data/concrete.csv' is successfully uploaded as "

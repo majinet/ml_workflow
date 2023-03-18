@@ -13,6 +13,7 @@ from feast import (
     FileSource,
     PushSource,
     RequestSource,
+    BatchFeatureView,
 )
 from feast.on_demand_feature_view import on_demand_feature_view
 from feast.types import Float32, Float64, Int64, String
@@ -20,28 +21,50 @@ from feast.types import Float32, Float64, Int64, String
 from feast.infra.offline_stores.contrib.postgres_offline_store.postgres_source import (
     PostgreSQLSource,
 )
-
-fs = FeatureStore(repo_path="/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo")
+from isoduration.types import Duration
+#fs = FeatureStore(repo_path="/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo")
 
 # Define an entity for the driver. You can think of an entity as a primary key used to
 # fetch features.
 passenger = Entity(name="passenger", join_keys=["PassengerId"])
 
-titanic_pca_source = PostgreSQLSource(
-    name="titanic_pca_feature",
-    query="SELECT * FROM titanic_pca_feature",
+titanic_train_pca_source = PostgreSQLSource(
+    name="titanic_train_pca_features",
+    table="titanic_train_pca_features",
     timestamp_field="event_timestamp",
     created_timestamp_column="created",
 )
 
+titanic_train_target_source = PostgreSQLSource(
+    name="titanic_train_target",
+    table="titanic_train_target",
+    timestamp_field="event_timestamp",
+    created_timestamp_column="created",
+)
+
+titanic_train_source = PostgreSQLSource(
+    name="titanic_train_features",
+    table="titanic_train_features",
+    timestamp_field="event_timestamp",
+    created_timestamp_column="created",
+)
+
+"""titanic_pca_source = FileSource(
+    name="titanic_pca_feature",
+    path="/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo/data/titanic_pca_feature.parquet",
+    timestamp_field="event_timestamp",
+    created_timestamp_column="created",
+)"""
+
 # Our parquet files contain sample data that includes a driver_id column, timestamps and
 # three feature column. Here we define a Feature View that will allow us to serve this
 # data to our model online.
-titanic_survive_fv = FeatureView(
+titanic_train_pca_fv = FeatureView(
     # The unique name of this feature view. Two feature views in a single
     # project cannot have the same name
-    name="titanic_survive_fv",
+    name="titanic_train_pca_fv",
     entities=[passenger],
+    ttl=timedelta(days=1),
     schema=[
         Field(name="PC1", dtype=Float32),
         Field(name="PC2", dtype=Float32),
@@ -50,17 +73,37 @@ titanic_survive_fv = FeatureView(
         Field(name="PC5", dtype=Float32),
     ],
     online=True,
-    source=titanic_pca_source,
+    source=titanic_train_pca_source,
+)
+
+titanic_train_fv = FeatureView(
+    # The unique name of this feature view. Two feature views in a single
+    # project cannot have the same name
+    name="titanic_train_fv",
+    entities=[passenger],
+    ttl=timedelta(days=1),
+    schema=[
+        Field(name="Pclass", dtype=Int64),
+        Field(name="Age", dtype=Float32),
+        Field(name="Sex", dtype=String),
+        Field(name="SibSp", dtype=Int64),
+        Field(name="Parch", dtype=Int64),
+        Field(name="Fare", dtype=Float32),
+    ],
+    online=True,
+    source=titanic_train_source,
 )
 
 # This groups features into a model version
 titanic_survive_svc_v1 = FeatureService(
     name="titanic_survive_svc_v1",
     features=[
-        titanic_survive_fv,  # Sub-selects a feature from a feature view
+        titanic_train_pca_fv,  # Sub-selects a feature from a feature view
+        titanic_train_fv,
     ],
 )
 
+"""
 # Defines a way to push data (to be available offline, online or both) into Feast.
 titanic_survive_push_source = PushSource(
     name="titanic_survive_push_source",
@@ -73,7 +116,6 @@ titanic_survive_push_source = PushSource(
 titanic_survive_fresh_fv = FeatureView(
     name="titanic_survive_fresh",
     entities=[passenger],
-    ttl=None,
     schema=[
         Field(name="PC1", dtype=Float32),
         Field(name="PC2", dtype=Float32),
@@ -83,7 +125,6 @@ titanic_survive_fresh_fv = FeatureView(
     ],
     online=True,
     source=titanic_survive_push_source,  # Changed from above
-    tags={"team": "titanic_survive_view"},
 )
 
 titanic_survive_svc_v2 = FeatureService(
@@ -91,6 +132,9 @@ titanic_survive_svc_v2 = FeatureService(
     features=[titanic_survive_fresh_fv],
 )
 
-fs.apply([titanic_pca_source, passenger, titanic_survive_fv, titanic_survive_svc_v1, titanic_survive_push_source, titanic_survive_fresh_fv, titanic_survive_svc_v2],
-         partial=False,
-         )
+fs.refresh_registry()
+
+fs.apply(
+    [titanic_pca_source, passenger, titanic_survive_fv, titanic_survive_svc_v1, titanic_survive_push_source, titanic_survive_fresh_fv, titanic_survive_svc_v2],
+    partial=False,
+)"""
