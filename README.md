@@ -1,4 +1,4 @@
-# Machine Learning Devops 
+# Machine Learning Devops (MLOps)
 
 Machine Learning DevOps is a set of practices and tools for deploying, testing, and managing machine learning models in production environments. It combines the principles of DevOps with machine learning workflows, and aims to increase the speed and reliability of deploying and maintaining machine learning models.
 
@@ -7,6 +7,20 @@ The process of Machine Learning DevOps starts with the development and training 
 Machine Learning DevOps also involves monitoring and managing the performance of the deployed models, as well as updating and retraining the models when new data is available or when the models no longer perform adequately. This involves creating feedback loops between the deployed models and the data sources, and incorporating automated testing, monitoring, and logging into the deployment pipelines.
 
 Overall, Machine Learning DevOps is a critical practice for organizations looking to deploy and scale machine learning models in production environments, while ensuring that the models are reliable, efficient, and continuously improving.
+
+## MLOps Level 2
+
+Adopting MLOps Level 2 practices provides several benefits for organizations that are developing and deploying machine learning (ML) models. Some of the key reasons to adopt MLOps Level 2 include:
+
+Improved scalability: By standardizing the packaging and deployment of ML models, organizations can scale their ML operations more easily and reliably across different environments, such as development, testing, and production.
+
+Increased reproducibility: By tracking the different versions of data, models, and code used in ML experiments, organizations can reproduce and compare results more easily, ensuring the validity and reliability of their ML models.
+
+Better collaboration: By establishing clear workflows and processes for ML development and deployment, organizations can improve collaboration and communication among different teams and stakeholders, such as data scientists, developers, and operations personnel.
+
+Enhanced quality and reliability: By implementing automated testing, monitoring, and logging practices, organizations can ensure the quality and reliability of their ML models, detecting and fixing issues more quickly and effectively.
+
+Faster time-to-market: By automating the deployment of ML models as APIs and managing their lifecycle, organizations can reduce the time and effort required to deploy new or updated models to production.
 
 ## Continuous Integration (CI)
 
@@ -22,6 +36,17 @@ Some common tools used in CI for Machine Learning include Jenkins, Travis CI, Ci
 ### Overall Architecture
 
 ![Alt text](./Overall_Arch.jpg "CI Platform")
+
+Core Components:
+
+- Kubernetes
+- Kubeflow Pipeline
+- Feast (Feature Store)
+- Docker & Docker Hub (Container Image Registry)
+- Minio (Object Store)
+- KATib (Hyperparameters Tuning)
+- GitHub & GitHub Actions
+
 
 ### Why Cloud Native Computing Foundation (CNCF) Compliance tools are important to MLOps
 
