@@ -1,3 +1,7 @@
+# About this project
+
+The objective of this project is to promote a MLOps Level 2 to help companies reduce their operational costs when developing machine learning applications by standardizing and automating the ML workflow.
+
 # Machine Learning Devops (MLOps)
 
 Machine Learning DevOps is a set of practices and tools for deploying, testing, and managing machine learning models in production environments. It combines the principles of DevOps with machine learning workflows, and aims to increase the speed and reliability of deploying and maintaining machine learning models.
