@@ -32,21 +32,36 @@ def put_parquet_into_minio(file_path: kfp.components.InputPath(str), filename: s
     client.fput_object("demo-bucket", filename, file_path)
 
 def extract_target(file_path: kfp.components.InputPath(str), output_path: kfp.components.OutputPath(str)):
+    """
+    Extracts the target column from a Parquet file and saves it to another Parquet file.
+
+    Args:
+        file_path (kfp.components.InputPath(str)): The path to the input Parquet file.
+        output_path (kfp.components.OutputPath(str)): The path to the output Parquet file.
+
+    Returns:
+        None
+    """
     import pandas as pd
 
+    # Load the input Parquet file into a pandas dataframe
     df = pd.read_parquet(file_path)
 
+    # Make a copy of the dataframe for preprocessing
     preprocessed_df = df.copy()
 
+    # Remove any rows with missing values and reset the index
     preprocessed_df = preprocessed_df.dropna()
     preprocessed_df = preprocessed_df.reset_index(drop=True)
 
+    # Select only the columns "PassengerId" and "Survived"
     columns = [
         "PassengerId",
         "Survived",
     ]
-
     preprocessed_df = preprocessed_df.loc[:, columns]
+
+    # Save the preprocessed dataframe to the output Parquet file
     preprocessed_df.to_parquet(output_path)
 
 def data_clean(file_path: kfp.components.InputPath(str), output_path: kfp.components.OutputPath(str)):
