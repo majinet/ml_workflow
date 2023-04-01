@@ -21,7 +21,16 @@ jobs:
           server: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
           ssh_private_key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           local_path: './pipelines/*'
-          remote_path: '/home/ubuntu'
+          remote_path: '/home/ubuntu/pipelines'
+          sftpArgs: '-o ConnectTimeout=5'
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: 'ubuntu'
+          server: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          ssh_private_key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          local_path: './titanic_feature/*'
+          remote_path: '/home/ubuntu/titanic_feature'
           sftpArgs: '-o ConnectTimeout=5'
       - name: run Pipeline
         uses: appleboy/ssh-action@master
@@ -30,4 +39,7 @@ jobs:
           username: ${{ vars.AWS_EC2_USERNAME }}
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           script: |
-            python3 ~/train_data.py
+            python3 ~/data_preprocessing_train.py
+            python3 ~/parquet_loader.py
+            feast apply
+            python3 ~/build_train_data.py

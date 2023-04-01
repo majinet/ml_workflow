@@ -7,7 +7,7 @@ def load_parquet_from_minio(output_path: kfp.components.OutputPath(str), filenam
     from minio.error import S3Error
 
     client = Minio(
-        "10.1.211.147:9000",
+        "10.152.183.99:9000",
         access_key="GZSTYEG6UFVFWMKTTF3W",
         secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
         secure=False,
@@ -21,7 +21,7 @@ def put_parquet_into_minio(file_path: kfp.components.InputPath(str), filename: s
     from minio.error import S3Error
 
     client = Minio(
-        "10.1.211.147:9000",
+        "10.152.183.99:9000",
         access_key="GZSTYEG6UFVFWMKTTF3W",
         secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
         secure=False,
@@ -30,6 +30,38 @@ def put_parquet_into_minio(file_path: kfp.components.InputPath(str), filename: s
     os.system(f"ls -lrt {file_path}")
 
     client.fput_object("demo-bucket", filename, file_path)
+
+def extract_entity(file_path: kfp.components.InputPath(str), output_path: kfp.components.OutputPath(str)):
+    """
+    Extracts the target column from a Parquet file and saves it to another Parquet file.
+
+    Args:
+        file_path (kfp.components.InputPath(str)): The path to the input Parquet file.
+        output_path (kfp.components.OutputPath(str)): The path to the output Parquet file.
+
+    Returns:
+        None
+    """
+    import pandas as pd
+
+    # Load the input Parquet file into a pandas dataframe
+    df = pd.read_parquet(file_path)
+
+    # Make a copy of the dataframe for preprocessing
+    preprocessed_df = df.copy()
+
+    # Remove any rows with missing values and reset the index
+    preprocessed_df = preprocessed_df.dropna()
+    preprocessed_df = preprocessed_df.reset_index(drop=True)
+
+    # Select only the columns "PassengerId"
+    columns = [
+        "PassengerId",
+    ]
+    preprocessed_df = preprocessed_df.loc[:, columns]
+
+    # Save the preprocessed dataframe to the output Parquet file
+    preprocessed_df.to_parquet(output_path)
 
 def extract_target(file_path: kfp.components.InputPath(str), output_path: kfp.components.OutputPath(str)):
     """
@@ -147,3 +179,21 @@ def create_new_features(file_path: kfp.components.InputPath(str), output_path: k
     print(f"X_pca: {X_pca.head()}")
 
     X_pca.to_parquet(output_path)
+
+def build_train_data(file_path: kfp.components.InputPath(str), output_path: kfp.components.OutputPath(str)):
+    import pandas as pd
+    from feast import FeatureStore
+
+    # Load the input Parquet file into a pandas dataframe
+    entity_df = pd.read_parquet(file_path)
+
+    fs = FeatureStore(repo_path="titanic_feature/feature_repo")
+
+    feature_service = fs.get_feature_service("titanic_train_fv")
+
+    training_df = fs.get_historical_features(
+        features=feature_service,
+        entity_df=entity_df
+    ).to_df()
+
+    training_df.to_parquet(output_path)

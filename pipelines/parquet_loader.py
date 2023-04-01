@@ -89,9 +89,11 @@ if __name__ == '__main__':
                         namespace="admin",
                         cookies=auth_session["session_cookie"])
 
-    client.create_run_from_pipeline_func(
+    result = client.create_run_from_pipeline_func(
         ml_pipeline,
         arguments={
 
         }
     )
+
+    client.wait_for_run_completion(result.run_id, 900)
