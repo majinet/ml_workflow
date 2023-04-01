@@ -1,7 +1,6 @@
 import kfp
-from typing import NamedTuple
-import pandas as pd
-import ml_pipeline_components.components as comp
+from pipelines import ml_pipeline_components as comp
+
 
 def warmup():
     return None

@@ -1,6 +1,6 @@
 import kfp
-from typing import NamedTuple
-import pandas as pd
+import ml_pipeline_components.components as comp
+import ml_pipeline_components.session as sess
 
 
 def load_parquet_from_minio_to_postgresql(filename: str):
@@ -15,9 +15,9 @@ def load_parquet_from_minio_to_postgresql(filename: str):
     from pytz import utc
 
     client = Minio(
-        "10.1.173.103:9000",
-        access_key="91v98eLB1zOwDPo8",
-        secret_key="6ZDwLVoC14AMOVCJozvJtIUjjwZfa0Ma",
+        "10.1.211.147:9000",
+        access_key="GZSTYEG6UFVFWMKTTF3W",
+        secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
         secure=False,
     )
 
@@ -26,7 +26,7 @@ def load_parquet_from_minio_to_postgresql(filename: str):
     client.fget_object("demo-bucket", parquet_file, parquet_file)
 
     # Define the PostgreSQL connection parameters
-    hostname = '10.152.183.45'
+    hostname = '10.152.183.19'
     port = '5432'
     database = 'feast'
     username = 'feast'
@@ -75,10 +75,19 @@ def ml_pipeline():
 
 
 if __name__ == '__main__':
-    # the namespace in which you deployed Kubeflow Pipelines
-    namespace = "kubeflow"
+    KUBEFLOW_ENDPOINT = "http://10.64.140.43.nip.io:80"
+    KUBEFLOW_USERNAME = "admin"
+    KUBEFLOW_PASSWORD = "admin"
 
-    client = kfp.Client(host=f"http://127.0.0.1:8080")
+    auth_session = sess.get_istio_auth_session(
+        url=KUBEFLOW_ENDPOINT,
+        username=KUBEFLOW_USERNAME,
+        password=KUBEFLOW_PASSWORD
+    )
+
+    client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
+                        namespace="admin",
+                        cookies=auth_session["session_cookie"])
 
     client.create_run_from_pipeline_func(
         ml_pipeline,

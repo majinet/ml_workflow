@@ -7,9 +7,9 @@ def load_parquet_from_minio(output_path: kfp.components.OutputPath(str), filenam
     from minio.error import S3Error
 
     client = Minio(
-        "10.1.173.103:9000",
-        access_key="91v98eLB1zOwDPo8",
-        secret_key="6ZDwLVoC14AMOVCJozvJtIUjjwZfa0Ma",
+        "10.1.211.147:9000",
+        access_key="GZSTYEG6UFVFWMKTTF3W",
+        secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
         secure=False,
     )
 
@@ -21,9 +21,9 @@ def put_parquet_into_minio(file_path: kfp.components.InputPath(str), filename: s
     from minio.error import S3Error
 
     client = Minio(
-        "10.1.173.103:9000",
-        access_key="91v98eLB1zOwDPo8",
-        secret_key="6ZDwLVoC14AMOVCJozvJtIUjjwZfa0Ma",
+        "10.1.211.147:9000",
+        access_key="GZSTYEG6UFVFWMKTTF3W",
+        secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
         secure=False,
     )
 

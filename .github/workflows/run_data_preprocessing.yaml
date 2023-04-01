@@ -1,0 +1,33 @@
+name: Build Data Preprocessing Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_data_preprocessing:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9" ]
+    environment: development
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: 'ubuntu'
+          server: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          ssh_private_key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          local_path: './pipelines/*'
+          remote_path: '/home/ubuntu'
+          sftpArgs: '-o ConnectTimeout=5'
+      - name: run Pipeline
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
+            python3 ~/train_data.py
