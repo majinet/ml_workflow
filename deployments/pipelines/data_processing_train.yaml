@@ -16,5 +16,5 @@ spec:
     spec:
       containers:
       - name: data-process-train
-        image: majinetudacitylearn/pipeline_data_preprocessing_train
+        image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
         imagePullPolicy: Always
