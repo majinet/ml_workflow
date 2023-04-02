@@ -1,38 +1,43 @@
 import kfp
-import ml_pipeline_components.components as comp
-import ml_pipeline_components.session as sess
+from ..ml_pipeline_components import components
+from ..ml_pipeline_components import session
 
 
 def warmup():
     return None
 
-
 load_parquet_op = kfp.components.create_component_from_func(
-    func=comp.load_parquet_from_minio,
+    func=components.load_parquet_from_minio,
     base_image='python:3.9',
     packages_to_install=['minio']
 )
 
 extract_target_op = kfp.components.create_component_from_func(
-    func=comp.extract_target,
+    func=components.extract_target,
+    base_image='python:3.9',
+    packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
+)
+
+extract_entity_op = kfp.components.create_component_from_func(
+    func=components.extract_entity,
     base_image='python:3.9',
     packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
 )
 
 data_clean_op = kfp.components.create_component_from_func(
-    func=comp.data_clean,
+    func=components.data_clean,
     base_image='python:3.9',
     packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
 )
 
 feature_extract_op = kfp.components.create_component_from_func(
-    func=comp.create_new_features,
+    func=components.create_new_features,
     base_image='python:3.9',
     packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
 )
 
 put_parquet_op = kfp.components.create_component_from_func(
-    func=comp.put_parquet_into_minio,
+    func=components.put_parquet_into_minio,
     base_image='python:3.9',
     packages_to_install=['minio']
 )
@@ -79,7 +84,7 @@ if __name__ == '__main__':
     KUBEFLOW_USERNAME = "admin"
     KUBEFLOW_PASSWORD = "admin"
 
-    auth_session = sess.get_istio_auth_session(
+    auth_session = session.get_istio_auth_session(
         url=KUBEFLOW_ENDPOINT,
         username=KUBEFLOW_USERNAME,
         password=KUBEFLOW_PASSWORD

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_data_preprocessing:
+  build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
