@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-process-train-deployment
+  labels:
+    app: pipeline-data-process
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipeline-data-process
+  template:
+    metadata:
+      labels:
+        app: pipeline-data-process
+    spec:
+      containers:
+      - name: data-process-train
+        image: majinetudacitylearn/pipeline_data_preprocessing_train
+        imagePullPolicy: Always

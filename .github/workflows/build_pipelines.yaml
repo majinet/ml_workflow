@@ -29,7 +29,7 @@ jobs:
           file: pipelines/ml_pipeline_components/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/module_ml_pipeline_components:v0.0.1
-      - name: Build and push
+      - name: Build and push (data_preprocessing_train)
         uses: docker/build-push-action@v4
         with:
           context: .
