@@ -1,6 +1,6 @@
-name: ci
+name: Build Pipelines components
 
-n:
+on:
   workflow_dispatch:
 
 jobs:
