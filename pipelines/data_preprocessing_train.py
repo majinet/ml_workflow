@@ -47,11 +47,13 @@ warmup_op = kfp.components.create_component_from_func(
     base_image='python:3.9',
 )
 
+"""
 put_parquet_sql_op = kfp.components.create_component_from_func(
     func=components.load_parquet_to_postgresql,
     base_image='python:3.9',
     packages_to_install=['minio', 'SQLAlchemy', 'pandas', 'psycopg2', 'pyarrow', 'fastparquet', 'feast']
 )
+"""
 
 @kfp.dsl.pipeline(
     name='train_data_pipeline',
