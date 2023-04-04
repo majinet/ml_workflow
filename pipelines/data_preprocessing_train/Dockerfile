@@ -4,8 +4,8 @@ WORKDIR /app/data_preprocessing_train
 
 COPY . .
 
-RUN "ls /"
-RUN "ls /app"
-RUN "ls /app/data_preprocessing_train"
+RUN ls /
+RUN ls /app
+RUN ls /app/data_preprocessing_train
 
 #CMD [ "python3", "data_preprocessing_train.py"]
