@@ -1,6 +1,6 @@
 import kfp
-from ..ml_pipeline_components import components
-from ..ml_pipeline_components import session
+from ml_pipeline_components import components
+from ml_pipeline_components import session
 
 
 def warmup():
