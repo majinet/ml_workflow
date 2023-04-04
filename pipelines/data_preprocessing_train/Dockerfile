@@ -5,5 +5,6 @@ WORKDIR /app/data_preprocessing_train
 COPY ./pipelines/data_preprocessing_train .
 
 RUN ls /app/data_preprocessing_train
+RUN ls /app/ml_pipeline_components
 
 CMD [ "python3", "data_preprocessing_train.py"]
