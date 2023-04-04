@@ -1,3 +1,4 @@
+import sys
 import kfp
 from ml_pipeline_components import components
 from ml_pipeline_components import session
@@ -114,3 +115,5 @@ if __name__ == '__main__':
 
     #client.wait_for_run_completion(result.run_id, 900)
     """
+
+    sys.exit(0)
