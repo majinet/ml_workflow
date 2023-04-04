@@ -3,7 +3,7 @@ name: Build Data Preprocessing Pipeline
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [Build Data Preprocessing Pipeline]
+    workflows: [Build Pipelines components]
     types:
       - completed
 
