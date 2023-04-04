@@ -7,9 +7,9 @@ def load_parquet_from_minio(output_path: kfp.components.OutputPath(str), filenam
     from minio.error import S3Error
 
     client = Minio(
-        "10.152.183.99:9000",
-        access_key="GZSTYEG6UFVFWMKTTF3W",
-        secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
+        "minio.kubeflow.svc.cluster.local",
+        access_key="QM3BXB99A35ACSX4WI3G",
+        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
         secure=False,
     )
 
@@ -21,9 +21,9 @@ def put_parquet_into_minio(file_path: kfp.components.InputPath(str), filename: s
     from minio.error import S3Error
 
     client = Minio(
-        "10.152.183.99:9000",
-        access_key="GZSTYEG6UFVFWMKTTF3W",
-        secret_key="oWXpZtCB0CR1p6d+1VJ+YWHdZVRWfNS1M3haFtpp",
+        "minio.kubeflow.svc.cluster.local",
+        access_key="QM3BXB99A35ACSX4WI3G",
+        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
         secure=False,
     )
 
@@ -206,7 +206,7 @@ def load_parquet_to_postgresql(file_path: kfp.components.InputPath(str), filenam
     from  feast.utils import make_df_tzaware
 
     # Define the PostgreSQL connection parameters
-    hostname = '10.152.183.19'
+    hostname = 'postgresql.default.svc.cluster.local'
     port = '5432'
     database = 'feast'
     username = 'feast'
