@@ -27,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: pipelines/data_preprocessing_train/Dockerfile-data_preprocessing_train
+          file: pipelines/Dockerfile-data_preprocessing_train
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline_data_preprocessing_train:v0.0.1
