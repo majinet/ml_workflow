@@ -100,11 +100,11 @@ if __name__ == '__main__':
         password=KUBEFLOW_PASSWORD
     )
 
-    """
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
                         namespace="admin",
                         cookies=auth_session["session_cookie"])
 
+    """
     result = client.create_run_from_pipeline_func(
         ml_pipeline,
         arguments={
