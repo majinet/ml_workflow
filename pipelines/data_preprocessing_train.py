@@ -48,7 +48,7 @@ warmup_op = kfp.components.create_component_from_func(
 )
 
 put_parquet_sql_op = kfp.components.create_component_from_func(
-    func=components.load_parquet_from_minio_to_postgresql,
+    func=components.load_parquet_to_postgresql,
     base_image='python:3.9',
     packages_to_install=['minio', 'SQLAlchemy', 'pandas', 'psycopg2', 'pyarrow', 'fastparquet', 'feast']
 )
@@ -72,8 +72,10 @@ def ml_pipeline():
     task_titanic_train_pca_features = put_parquet_sql_op(task_feature_extract_op.output, filename="titanic_train_pca_features")
 
     task_load_parquet_op.after(task_warmup_op)
-    task_titanic_train_entity.after(task_load_parquet_op)
+    task_extract_entity_op.after(task_load_parquet_op)
     task_extract_target_op.after(task_load_parquet_op)
+
+    task_titanic_train_entity.after(task_extract_entity_op)
     task_titanic_train_target.after(task_extract_target_op)
 
     task_data_clean_op.after(task_load_parquet_op)

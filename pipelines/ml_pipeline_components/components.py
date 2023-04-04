@@ -198,7 +198,7 @@ def build_train_data(file_path: kfp.components.InputPath(str), output_path: kfp.
 
     training_df.to_parquet(output_path)
 
-def load_parquet_from_minio_to_postgresql(file_path: kfp.components.InputPath(str), filename: str):
+def load_parquet_to_postgresql(file_path: kfp.components.InputPath(str), filename: str):
     import os
     import pandas as pd
     from sqlalchemy import create_engine
