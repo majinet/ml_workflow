@@ -7,5 +7,4 @@ RUN pip3 install kfp --upgrade --user
 RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
 COPY ./pipelines/ml_pipeline_components .
-
-RUN ls /app/ml_pipeline_components
+COPY ./pipelines/main.py ../

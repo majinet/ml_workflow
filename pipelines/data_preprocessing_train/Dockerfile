@@ -4,6 +4,7 @@ WORKDIR /app/data_preprocessing_train
 
 COPY ./pipelines/data_preprocessing_train .
 
+RUN ls /app
 RUN ls /app/data_preprocessing_train
 RUN ls /app/ml_pipeline_components
 
