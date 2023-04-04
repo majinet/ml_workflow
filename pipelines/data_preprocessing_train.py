@@ -101,6 +101,8 @@ if __name__ == '__main__':
         password=KUBEFLOW_PASSWORD
     )
 
+    print(auth_session["session_cookie"])
+
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
                         namespace="admin",
                         cookies=auth_session["session_cookie"])
@@ -115,5 +117,3 @@ if __name__ == '__main__':
 
     #client.wait_for_run_completion(result.run_id, 900)
     """
-
-    sys.exit(0)

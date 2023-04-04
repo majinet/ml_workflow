@@ -30,10 +30,10 @@ def get_istio_auth_session(url: str, username: str, password: str) -> dict:
         # Determine if Endpoint is Secured
         ################
         resp = s.get(url, allow_redirects=True)
-        """if resp.status_code != 200:
+        if resp.status_code != 200:
             raise RuntimeError(
-                f"HTTP status code '{resp.status_code}' for GET against: {url}"
-            )"""
+                f"HTTP status code '{resp.status_code}' for GET against1: {url}"
+            )
 
         auth_session["redirect_url"] = resp.url
 
@@ -74,7 +74,7 @@ def get_istio_auth_session(url: str, username: str, password: str) -> dict:
             resp = s.get(redirect_url_obj.geturl(), allow_redirects=True)
             if resp.status_code != 200:
                 raise RuntimeError(
-                    f"HTTP status code '{resp.status_code}' for GET against: {redirect_url_obj.geturl()}"
+                    f"HTTP status code '{resp.status_code}' for GET against2: {redirect_url_obj.geturl()}"
                 )
 
             # set the login url
