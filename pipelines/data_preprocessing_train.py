@@ -61,6 +61,7 @@ put_parquet_sql_op = kfp.components.create_component_from_func(
 )
 def ml_pipeline():
 
+    """
     task_warmup_op = warmup_op()
     task_load_parquet_op = load_parquet_op(filename="titanic_train.parquet")
     task_extract_entity_op = extract_entity_op(task_load_parquet_op.output)
@@ -85,7 +86,7 @@ def ml_pipeline():
 
     task_feature_extract_op.after(task_data_clean_op)
     #task_titanic_train_pca_features.after(task_feature_extract_op)
-
+    """
 
 if __name__ == '__main__':
     # the namespace in which you deployed Kubeflow Pipelines
@@ -99,6 +100,7 @@ if __name__ == '__main__':
         password=KUBEFLOW_PASSWORD
     )
 
+    """
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
                         namespace="admin",
                         cookies=auth_session["session_cookie"])
@@ -111,3 +113,4 @@ if __name__ == '__main__':
     )
 
     #client.wait_for_run_completion(result.run_id, 900)
+    """
