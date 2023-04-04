@@ -14,7 +14,14 @@ spec:
       labels:
         app: pipeline-data-process
     spec:
+      volumes:
+        - name: pvc
+          persistentVolumeClaim:
+            claimName: pvc-kubeflow-pipe-app
       containers:
       - name: data-process-train
         image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
         imagePullPolicy: Always
+        volumeMounts:
+          - name: pvc
+            mountPath: /app
