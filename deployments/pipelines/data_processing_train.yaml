@@ -24,4 +24,4 @@ spec:
         imagePullPolicy: Always
         volumeMounts:
           - name: pvc
-            mountPath: /
+            mountPath: /app
