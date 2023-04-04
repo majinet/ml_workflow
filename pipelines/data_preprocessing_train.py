@@ -47,6 +47,11 @@ warmup_op = kfp.components.create_component_from_func(
     base_image='python:3.9',
 )
 
+put_parquet_sql_op = kfp.components.create_component_from_func(
+    func=components.load_parquet_from_minio_to_postgresql,
+    base_image='python:3.9',
+    packages_to_install=['minio', 'SQLAlchemy', 'pandas', 'psycopg2', 'pyarrow', 'fastparquet', 'feast']
+)
 
 @kfp.dsl.pipeline(
     name='train_data_pipeline',
@@ -61,21 +66,21 @@ def ml_pipeline():
     task_data_clean_op = data_clean_op(task_load_parquet_op.output)
     task_feature_extract_op = feature_extract_op(task_data_clean_op.output)
 
-    task_put_parquet_ent = put_parquet_op(task_extract_entity_op.output, filename="titanic_train_entity.parquet")
-    task_put_parquet_op = put_parquet_op(task_data_clean_op.output, filename="titanic_train_features.parquet")
-    task_put_parquet_op_2 = put_parquet_op(task_feature_extract_op.output, filename="titanic_train_pca_features.parquet")
-    task_put_parquet_op_3 = put_parquet_op(task_extract_target_op.output, filename="titanic_train_target.parquet")
+    task_titanic_train_entity = put_parquet_sql_op(task_extract_entity_op.output, filename="titanic_train_entity")
+    task_titanic_train_target = put_parquet_sql_op(task_extract_target_op.output, filename="titanic_train_target")
+    task_titanic_train_features = put_parquet_sql_op(task_data_clean_op.output, filename="titanic_train_features")
+    task_titanic_train_pca_features = put_parquet_sql_op(task_feature_extract_op.output, filename="titanic_train_pca_features")
 
     task_load_parquet_op.after(task_warmup_op)
-    task_put_parquet_ent.after(task_load_parquet_op)
+    task_titanic_train_entity.after(task_load_parquet_op)
     task_extract_target_op.after(task_load_parquet_op)
-    task_put_parquet_op_3.after(task_extract_target_op)
+    task_titanic_train_target.after(task_extract_target_op)
 
     task_data_clean_op.after(task_load_parquet_op)
-    task_put_parquet_op.after(task_data_clean_op)
+    task_titanic_train_features.after(task_data_clean_op)
 
     task_feature_extract_op.after(task_data_clean_op)
-    task_put_parquet_op_2.after(task_feature_extract_op)
+    task_titanic_train_pca_features.after(task_feature_extract_op)
 
 
 if __name__ == '__main__':
@@ -101,4 +106,4 @@ if __name__ == '__main__':
         }
     )
 
-    client.wait_for_run_completion(result.run_id, 900)
+    #client.wait_for_run_completion(result.run_id, 900)

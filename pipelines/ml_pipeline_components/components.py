@@ -197,3 +197,37 @@ def build_train_data(file_path: kfp.components.InputPath(str), output_path: kfp.
     ).to_df()
 
     training_df.to_parquet(output_path)
+
+def load_parquet_from_minio_to_postgresql(file_path: kfp.components.InputPath(str), filename: str):
+    import os
+    import pandas as pd
+    from sqlalchemy import create_engine
+    from datetime import datetime, timedelta
+    from  feast.utils import make_df_tzaware
+
+    # Define the PostgreSQL connection parameters
+    hostname = '10.152.183.19'
+    port = '5432'
+    database = 'feast'
+    username = 'feast'
+    password = 'feast'
+
+    # Create a SQLAlchemy engine object
+    engine = create_engine(f'postgresql://{username}:{password}@{hostname}:{port}/{database}')
+
+    # Define the DataFrame
+    df = pd.read_parquet(file_path)
+
+    df['event_timestamp'] = datetime.now()
+
+    df = make_df_tzaware(df)
+    df['created'] = datetime.now()
+
+    # Load the DataFrame into the PostgreSQL database
+    table_name = filename
+    df.to_sql(table_name, engine, if_exists='replace', index=False)
+
+    print(f"write to table: {df}")
+
+    # Close the database connection
+    engine.dispose()
