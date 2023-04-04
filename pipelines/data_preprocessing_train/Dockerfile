@@ -4,4 +4,4 @@ WORKDIR /app/data_preprocessing_train
 
 COPY . .
 
-CMD [ "python3", "data_preprocessing_train.py"]
+#CMD [ "python3", "data_preprocessing_train.py"]
