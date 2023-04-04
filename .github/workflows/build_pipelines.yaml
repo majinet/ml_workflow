@@ -2,6 +2,7 @@ name: Build Pipelines components
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   build:
