@@ -2,8 +2,8 @@ FROM python:3.9-slim-buster
 
 WORKDIR pipelines
 
-#RUN pip3 install kfp==2.0.0b13 --upgrade --user
-#RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
+RUN pip3 install kfp==2.0.0b13 --upgrade --user
+RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
 COPY ./pipelines/ml_pipeline_components ml_pipeline_components
 COPY ./pipelines/data_preprocessing_train.py .
