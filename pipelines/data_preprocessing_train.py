@@ -7,6 +7,12 @@ from ml_pipeline_components import session
 
 
 @dsl.component(
+    base_image='python:3.9'
+)
+def startup_check():
+    print("startup check")
+
+@dsl.component(
     base_image='python:3.9',
     packages_to_install=['minio']
 )
@@ -276,8 +282,10 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
 )
 def ml_pipeline():
 
+
+    task_startup_check_op = startup_check()
+
     """
-    task_warmup_op = warmup_op()
     task_load_parquet_op = load_parquet_op(filename="titanic_train.parquet")
     task_extract_entity_op = extract_entity_op(task_load_parquet_op.output)
     task_extract_target_op = extract_target_op(task_load_parquet_op.output)
@@ -321,7 +329,6 @@ if __name__ == '__main__':
                         namespace="admin",
                         cookies=auth_session["session_cookie"])
 
-    """
     result = client.create_run_from_pipeline_func(
         ml_pipeline,
         arguments={
@@ -330,4 +337,3 @@ if __name__ == '__main__':
     )
 
     #client.wait_for_run_completion(result.run_id, 900)
-    """
