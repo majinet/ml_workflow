@@ -319,13 +319,14 @@ if __name__ == '__main__':
 
     auth_session = session.get_istio_auth_session(
         url=KUBEFLOW_ENDPOINT,
+        namespace="admin",
         username=KUBEFLOW_USERNAME,
         password=KUBEFLOW_PASSWORD
     )
 
     print(auth_session["session_cookie"])
 
-    client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
+    client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/_/pipeline",
                         cookies=auth_session["session_cookie"])
 
     print(f"health: {client.get_kfp_healthz()}")
