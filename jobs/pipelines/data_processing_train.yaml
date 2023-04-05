@@ -3,7 +3,8 @@ kind: Job
 metadata:
   name: data-process-train-deployment
 spec:
-  replicas: 1
+  parallelism: 1
+  ttlSecondsAfterFinished: 300
   selector:
     matchLabels:
       app: pipeline-data-process
@@ -12,8 +13,6 @@ spec:
       labels:
         app: pipeline-data-process
     spec:
-      parallelism: 1
-      ttlSecondsAfterFinished: 300
       volumes:
       - name: pvc
         persistentVolumeClaim:
