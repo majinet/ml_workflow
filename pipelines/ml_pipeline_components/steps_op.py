@@ -12,7 +12,7 @@ def load_parquet_from_minio(output_path: OutputPath(str), filename: str):
     from minio.error import S3Error
 
     client = Minio(
-        "minio.kubeflow.svc.cluster.local",
+        "minio.kubeflow.svc.cluster.local:9000",
         access_key="QM3BXB99A35ACSX4WI3G",
         secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
         secure=False,
@@ -26,7 +26,7 @@ def put_parquet_into_minio(file_path: InputPath(str), filename: str):
     from minio.error import S3Error
 
     client = Minio(
-        "minio.kubeflow.svc.cluster.local",
+        "minio.kubeflow.svc.cluster.local:9000",
         access_key="QM3BXB99A35ACSX4WI3G",
         secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
         secure=False,
