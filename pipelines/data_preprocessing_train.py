@@ -328,11 +328,15 @@ if __name__ == '__main__':
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
                         cookies=auth_session["session_cookie"])
 
+    print(f"health: {client.get_kfp_healthz()}")
+
     result = client.create_run_from_pipeline_func(
         ml_pipeline,
         arguments={
 
         }
     )
+
+    print(f"result: {result}")
 
     #client.wait_for_run_completion(result.run_id, 900)
