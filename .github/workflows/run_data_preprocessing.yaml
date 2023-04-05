@@ -24,8 +24,8 @@ jobs:
           username: 'ubuntu'
           server: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
           ssh_private_key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-          local_path: './deployments/*'
-          remote_path: '/home/ubuntu/deployments'
+          local_path: './jobs/*'
+          remote_path: '/home/ubuntu/jobs'
           sftpArgs: '-o ConnectTimeout=5'
       - name: run Pipeline
         uses: appleboy/ssh-action@master
@@ -34,4 +34,4 @@ jobs:
           username: ${{ vars.AWS_EC2_USERNAME }}
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           script: |
-            kubectl apply -f deployments/pipelines/data_processing_train.yaml
+            kubectl apply -f jobs/pipelines/data_processing_train.yaml

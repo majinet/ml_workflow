@@ -344,5 +344,5 @@ if __name__ == '__main__':
 
     print(f"result: {result}")
 
-    wait_res = client.wait_for_run_completion(result.run_id, 1800)
-    print (f"wait_res: {wait_res}")
+    #wait_res = client.wait_for_run_completion(result.run_id, 1800)
+    #print (f"wait_res: {wait_res}")
