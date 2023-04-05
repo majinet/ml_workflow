@@ -277,7 +277,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
 
 
 @dsl.pipeline(
-    name='train_data_pipeline',
+    name='train-data-pipeline',
     description='ML Pipeline for train_data'
 )
 def ml_pipeline():
@@ -326,7 +326,6 @@ if __name__ == '__main__':
     print(auth_session["session_cookie"])
 
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
-                        namespace="admin",
                         cookies=auth_session["session_cookie"])
 
     result = client.create_run_from_pipeline_func(
