@@ -326,7 +326,7 @@ if __name__ == '__main__':
     print(auth_session["session_cookie"])
 
     client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
-                        namespace=None,
+                        namespace='admin',
                         cookies=auth_session["session_cookie"])
 
     print(f"health: {client.get_kfp_healthz()}")
@@ -336,7 +336,7 @@ if __name__ == '__main__':
         arguments={
 
         },
-        namespace=None
+        namespace='admin'
     )
 
     print(f"result: {result}")
