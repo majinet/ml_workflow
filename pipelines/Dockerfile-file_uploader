@@ -1,0 +1,11 @@
+FROM python:3.9-slim-buster
+
+WORKDIR pipelines
+
+RUN pip3 install kfp --upgrade --user
+RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
+RUN pip3 install minio --upgrade --user
+
+COPY ./pipelines/file_uploader.py .
+
+CMD ["python3", "--train-path", "/data", "--train-filename", "train", "--test-path", "/data", "--test-filename", "test", "file_uploader"]

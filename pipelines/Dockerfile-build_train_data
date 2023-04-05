@@ -1,0 +1,11 @@
+FROM python:3.9-slim-buster
+
+WORKDIR pipelines
+
+RUN pip3 install kfp --upgrade --user
+RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
+
+COPY ./pipelines/ml_pipeline_components ml_pipeline_components
+COPY ./pipelines/build_train_data.py .
+
+CMD [ "python3", "build_train_data.py"]

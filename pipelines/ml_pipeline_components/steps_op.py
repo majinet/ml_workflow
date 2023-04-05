@@ -241,3 +241,26 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
     # Close the database connection
     engine.dispose()
 
+def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
+    from feast import FeatureStore, RepoConfig, RegistryConfig
+    import pandas as pd
+    from sqlalchemy import text, create_engine
+
+    entity_df = pd.read_parquet(file_path)
+
+    feature_store = FeatureStore(repo_path="titanic_feature/feature_repo")  # Initialize the feature store
+
+    feature_service = feature_store.get_feature_service("titanic_survive_svc_v1")
+    job = feature_store.get_historical_features(
+        features=feature_service,
+        entity_df=entity_df,
+    )
+
+    training_df = job.to_df()
+
+    print("----- Feature schema -----\n")
+    print(training_df.info())
+
+    print()
+    print("----- Example features -----\n")
+    print(training_df.head())

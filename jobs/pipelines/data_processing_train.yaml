@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: data-process-train-deployment
+  name: Job-data-process-train
 spec:
   parallelism: 1
   ttlSecondsAfterFinished: 300
@@ -11,15 +11,36 @@ spec:
         app: pipeline-data-process
     spec:
       volumes:
-      - name: pvc
+      - name: pvc-app
         persistentVolumeClaim:
           claimName: pvc-kubeflow-pipe-app
+      - name: pvc-data
+        persistentVolumeClaim:
+          claimName: pvc-kubeflow-pipe-data
       containers:
+      - name: file-uploader
+        image: majinetudacitylearn/file-uploader:v0.0.1
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: pvc-data
+          mountPath: /data
       - name: data-process-train
         image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
-        - name: pvc
+        - name: pvc-app
           mountPath: /app
+      - name: feast-apply
+        image: majinetudacitylearn/feast-apply:v0.0.1
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: pvc-data
+            mountPath: /data
+      - name: feast-apply
+        image: majinetudacitylearn/pipeline_train_data:v0.0.1
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: pvc-app
+            mountPath: /app
       restartPolicy: Never
   backoffLimit: 3
