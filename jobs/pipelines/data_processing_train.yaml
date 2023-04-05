@@ -5,9 +5,6 @@ metadata:
 spec:
   parallelism: 1
   ttlSecondsAfterFinished: 300
-  selector:
-    matchLabels:
-      app: pipeline-data-process
   template:
     metadata:
       labels:
