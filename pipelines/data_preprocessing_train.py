@@ -78,31 +78,28 @@ def ml_pipeline():
     task_startup_check = startup_check_op()
     task_load_parquet = load_parquet_from_minio_op(filename="titanic_train.parquet")
 
+    task_extract_entity = extract_entity_op(task_load_parquet.output)
+    task_extract_target = extract_target_op(task_load_parquet.output)
+    task_data_clean = data_clean_op(task_load_parquet.output)
+    task_create_new_features = create_new_features_op(task_data_clean.output)
+
+    task_titanic_train_entity = load_parquet_to_postgresql_op(task_extract_entity.output, filename="titanic_train_entity")
+    task_titanic_train_target = load_parquet_to_postgresql_op(task_extract_target.output, filename="titanic_train_target")
+    task_titanic_train_features = load_parquet_to_postgresql_op(task_data_clean.output, filename="titanic_train_features")
+    task_titanic_train_pca_features = load_parquet_to_postgresql_op(task_create_new_features.output, filename="titanic_train_pca_features")
+
     task_load_parquet.after(task_startup_check)
+    task_extract_entity.after(task_load_parquet)
+    task_extract_target.after(task_load_parquet)
 
-    """
-    task_extract_entity_op = extract_entity_op(task_load_parquet_op.output)
-    task_extract_target_op = extract_target_op(task_load_parquet_op.output)
-    task_data_clean_op = data_clean_op(task_load_parquet_op.output)
-    task_feature_extract_op = feature_extract_op(task_data_clean_op.output)
+    task_data_clean.after(task_load_parquet)
+    task_create_new_features.after(task_data_clean)
 
-    #task_titanic_train_entity = put_parquet_sql_op(task_extract_entity_op.output, filename="titanic_train_entity")
-    #task_titanic_train_target = put_parquet_sql_op(task_extract_target_op.output, filename="titanic_train_target")
-    #task_titanic_train_features = put_parquet_sql_op(task_data_clean_op.output, filename="titanic_train_features")
-    #task_titanic_train_pca_features = put_parquet_sql_op(task_feature_extract_op.output, filename="titanic_train_pca_features")
+    task_titanic_train_entity.after(task_extract_entity)
+    task_titanic_train_target.after(task_extract_target)
+    task_titanic_train_features.after(task_data_clean)
+    task_titanic_train_pca_features.after(task_create_new_features)
 
-    task_extract_entity_op.after(task_load_parquet_op)
-    task_extract_target_op.after(task_load_parquet_op)
-
-    #task_titanic_train_entity.after(task_extract_entity_op)
-    #task_titanic_train_target.after(task_extract_target_op)
-
-    task_data_clean_op.after(task_load_parquet_op)
-    #task_titanic_train_features.after(task_data_clean_op)
-
-    task_feature_extract_op.after(task_data_clean_op)
-    #task_titanic_train_pca_features.after(task_feature_extract_op)
-    """
 
 if __name__ == '__main__':
     # the namespace in which you deployed Kubeflow Pipelines
