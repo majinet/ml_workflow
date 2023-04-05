@@ -1,7 +1,7 @@
-kfp~=1.8.19
+kfp~=2.0.0b13
 pandas~=1.5.3
 scikit-learn
-minio~=7.1.13
+minio~=7.1.14
 numpy
 feast~=0.29.0
 matplotlib
