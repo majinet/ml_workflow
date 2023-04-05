@@ -1,4 +1,4 @@
-kfp~=2.0.0b13
+kfp
 pandas~=1.5.3
 scikit-learn
 minio~=7.1.14

@@ -1,17 +1,21 @@
 import sys
 import kfp
 from kfp import dsl
-from kfp.dsl import component, Input, Output, InputPath, OutputPath, Dataset, Model
+from kfp.components import InputPath, OutputPath, create_component_from_func
 
 from ml_pipeline_components import session
 
 
-@dsl.component(
-    base_image='python:3.9'
-)
 def startup_check():
     print("startup check")
 
+# add_op is a task factory function that creates a task object when given arguments
+startup_check_op = create_component_from_func(
+    func=startup_check,
+    base_image='python:3.9', # Optional
+)
+
+"""
 @dsl.component(
     base_image='python:3.9',
     packages_to_install=['minio']
@@ -55,7 +59,7 @@ def put_parquet_into_minio(file_path: InputPath(str), filename: str):
     packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
 )
 def extract_entity(file_path: InputPath(str), output_path: OutputPath(str)):
-    """
+    
     Extracts the target column from a Parquet file and saves it to another Parquet file.
 
     Args:
@@ -64,7 +68,7 @@ def extract_entity(file_path: InputPath(str), output_path: OutputPath(str)):
 
     Returns:
         None
-    """
+    
     import pandas as pd
 
     # Load the input Parquet file into a pandas dataframe
@@ -91,7 +95,7 @@ def extract_entity(file_path: InputPath(str), output_path: OutputPath(str)):
     packages_to_install=['numpy', 'pandas', 'fastparquet', 'scikit-learn', 'xgboost']
 )
 def extract_target(file_path: InputPath(str), output_path: OutputPath(str)):
-    """
+    
     Extracts the target column from a Parquet file and saves it to another Parquet file.
 
     Args:
@@ -100,7 +104,7 @@ def extract_target(file_path: InputPath(str), output_path: OutputPath(str)):
 
     Returns:
         None
-    """
+    
     import pandas as pd
 
     # Load the input Parquet file into a pandas dataframe
@@ -274,7 +278,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
 
     # Close the database connection
     engine.dispose()
-
+"""
 
 @dsl.pipeline(
     name='train-data-pipeline',
@@ -282,8 +286,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
 )
 def ml_pipeline():
 
-
-    task_startup_check_op = startup_check()
+    task_startup_check = startup_check_op()
 
     """
     task_load_parquet_op = load_parquet_op(filename="titanic_train.parquet")
