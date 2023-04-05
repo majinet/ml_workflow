@@ -325,7 +325,7 @@ if __name__ == '__main__':
 
     print(auth_session["session_cookie"])
 
-    client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/_/pipeline",
+    client = kfp.Client(host=f"{KUBEFLOW_ENDPOINT}/pipeline",
                         namespace=None,
                         cookies=auth_session["session_cookie"])
 
