@@ -18,11 +18,11 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-kubeflow-pipe-data
       containers:
-      - name: build-train-data
-        image: majinetudacitylearn/pipeline_build_train_data:v0.0.1
+      - name: feast-apply
+        image: majinetudacitylearn/feast_apply:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
-        - name: pvc-app
-          mountPath: /app
+        - name: pvc-data
+          mountPath: /data
       restartPolicy: Never
   backoffLimit: 0

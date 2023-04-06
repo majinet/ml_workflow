@@ -23,6 +23,10 @@ from feast.infra.offline_stores.contrib.postgres_offline_store.postgres_source i
 )
 from isoduration.types import Duration
 
+from minio import Minio
+from minio.error import S3Error
+
+
 # Define an entity for the driver. You can think of an entity as a primary key used to
 # fetch features.
 passenger = Entity(name="passenger", join_keys=["PassengerId"])
@@ -109,6 +113,15 @@ if __name__ == '__main__':
          titanic_train_fv, titanic_survive_svc_v1],
         partial=False,
     )
+
+    client = Minio(
+        "minio.kubeflow.svc.cluster.local:9000",
+        access_key="QM3BXB99A35ACSX4WI3G",
+        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        secure=False,
+    )
+
+    client.fget_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
 
 """
 # Defines a way to push data (to be available offline, online or both) into Feast.

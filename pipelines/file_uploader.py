@@ -46,6 +46,7 @@ def main(train_path: str, train_filename: str, test_path: str, test_filename: st
     client.fput_object(
         "demo-bucket", f"{test_filename}.parquet", f"{test_path}/{test_filename}.parquet",
     )
+
     print(
         "'input/fe-course-data/concrete.csv' is successfully uploaded as "
         "object 'concrete.csv' to bucket 'demo-bucket'."
