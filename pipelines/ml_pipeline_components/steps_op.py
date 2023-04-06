@@ -241,7 +241,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
     # Close the database connection
     engine.dispose()
 
-def load_df_from_postgresql(file_path: InputPath(str), filename: str):
+def load_df_from_postgresql(filename: str):
     import os
     import pandas as pd
     from sqlalchemy import create_engine
