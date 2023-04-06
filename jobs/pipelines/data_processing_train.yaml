@@ -17,7 +17,7 @@ spec:
       - name: pvc-data
         persistentVolumeClaim:
           claimName: pvc-kubeflow-pipe-data
-      containers:
+      initContainers:
       - name: file-uploader
         image: majinetudacitylearn/file_uploader:v0.0.1
         imagePullPolicy: Always
@@ -34,13 +34,14 @@ spec:
         image: majinetudacitylearn/feast_apply:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
-          - name: pvc-data
-            mountPath: /data
+        - name: pvc-data
+          mountPath: /data
+      containers:
       - name: build-train-data
         image: majinetudacitylearn/pipeline_train_data:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
-          - name: pvc-app
-            mountPath: /app
+        - name: pvc-app
+          mountPath: /app
       restartPolicy: Never
   backoffLimit: 3
