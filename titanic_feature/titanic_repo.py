@@ -121,7 +121,7 @@ if __name__ == '__main__':
         secure=False,
     )
 
-    client.fget_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
+    client.fput_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
 
 """
 # Defines a way to push data (to be available offline, online or both) into Feast.
