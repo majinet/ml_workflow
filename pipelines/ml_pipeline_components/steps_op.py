@@ -219,7 +219,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
     import pandas as pd
     from sqlalchemy import create_engine
     from datetime import datetime, timedelta
-    from  feast.utils import make_df_tzaware
+    from feast.utils import make_df_tzaware
 
     # Define the PostgreSQL connection parameters
     hostname = 'postgresql.default.svc.cluster.local'

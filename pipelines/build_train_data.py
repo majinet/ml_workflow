@@ -6,7 +6,7 @@ from ml_pipeline_components import session
 load_df_op = kfp.components.create_component_from_func(
     func=steps_op.load_df_from_postgresql,
     base_image='python:3.9',
-    packages_to_install=['minio']
+    packages_to_install=['numpy', 'pandas', 'feast', 'SQLAlchemy', 'psycopg2']
 )
 
 build_train_data_op = kfp.components.create_component_from_func(
