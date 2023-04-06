@@ -196,9 +196,9 @@ def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
     # Load the input Parquet file into a pandas dataframe
     entity_df = pd.read_parquet(file_path)
 
-    fs = FeatureStore(repo_path="titanic_feature/feature_repo")
+    fs = FeatureStore(repo_path="feature_repo")
 
-    feature_service = fs.get_feature_service("titanic_train_fv")
+    feature_service = fs.get_feature_service("titanic_survive_svc_v1")
 
     training_df = fs.get_historical_features(
         features=feature_service,

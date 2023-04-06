@@ -7,5 +7,8 @@ RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
 COPY ./pipelines/ml_pipeline_components ml_pipeline_components
 COPY ./pipelines/build_train_data.py .
+COPY ./titanic_feature/ .
+
+RUN ls .
 
 CMD [ "python3", "build_train_data.py"]
