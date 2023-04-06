@@ -6,4 +6,6 @@ RUN pip3 install feast --upgrade --user
 
 COPY ./titanic_feature .
 
-CMD ["feast", "apply"]
+RUN ls .
+
+CMD ["python3", "feast_main.py"]
