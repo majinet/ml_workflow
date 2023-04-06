@@ -199,7 +199,7 @@ def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
 
     os.system("ls -lrt")
 
-    fs = FeatureStore(repo_path="feature_repo")
+    fs = FeatureStore(repo_path="/app/pipelines/feature_repo")
 
     feature_service = fs.get_feature_service("titanic_survive_svc_v1")
 
