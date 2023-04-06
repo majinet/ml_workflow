@@ -10,5 +10,6 @@ COPY ./pipelines/build_train_data.py .
 COPY ./titanic_feature/ .
 
 RUN ls .
+RUN ls feature_repo/
 
 CMD [ "python3", "build_train_data.py"]
