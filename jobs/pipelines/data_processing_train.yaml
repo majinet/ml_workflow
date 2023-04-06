@@ -25,4 +25,4 @@ spec:
         - name: pvc-data
           mountPath: /data
       restartPolicy: Never
-  backoffLimit: 3
+  backoffLimit: 1
