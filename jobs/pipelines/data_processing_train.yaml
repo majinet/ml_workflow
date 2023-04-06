@@ -1,24 +1,3 @@
-"""
-      - name: data-process-train
-        image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
-        imagePullPolicy: Always
-        volumeMounts:
-        - name: pvc-app
-          mountPath: /app
-      - name: feast-apply
-        image: majinetudacitylearn/feast_apply:v0.0.1
-        imagePullPolicy: Always
-        volumeMounts:
-        - name: pvc-data
-          mountPath: /data
-      - name: build-train-data
-        image: majinetudacitylearn/pipeline_train_data:v0.0.1
-        imagePullPolicy: Always
-        volumeMounts:
-        - name: pvc-app
-          mountPath: /app
-"""
-
 apiVersion: batch/v1
 kind: Job
 metadata:
