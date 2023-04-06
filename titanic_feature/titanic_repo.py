@@ -22,7 +22,6 @@ from feast.infra.offline_stores.contrib.postgres_offline_store.postgres_source i
     PostgreSQLSource,
 )
 from isoduration.types import Duration
-#fs = FeatureStore(repo_path="/mnt/c/Users/majin/PycharmProjects/ml_workflow/feast_demo/feature_repo")
 
 # Define an entity for the driver. You can think of an entity as a primary key used to
 # fetch features.
@@ -102,6 +101,14 @@ titanic_survive_svc_v1 = FeatureService(
         titanic_train_fv,
     ],
 )
+
+if __name__ == '__main__':
+    fs = FeatureStore(repo_path="feature_repo")
+    fs.apply(
+        [titanic_train_pca_source, titanic_train_target_source, titanic_train_source, passenger, titanic_train_pca_fv,
+         titanic_train_fv, titanic_survive_svc_v1],
+        partial=False,
+    )
 
 """
 # Defines a way to push data (to be available offline, online or both) into Feast.

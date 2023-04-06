@@ -8,4 +8,4 @@ COPY ./titanic_feature .
 
 RUN ls .
 
-CMD ["python3", "feast_main.py"]
+CMD ["python3", "titanic_repo.py"]
