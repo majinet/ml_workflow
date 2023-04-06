@@ -19,7 +19,7 @@ spec:
           claimName: pvc-kubeflow-pipe-data
       containers:
       - name: build-train-data
-        image: majinetudacitylearn/pipeline_train_data:v0.0.1
+        image: majinetudacitylearn/pipeline_build_train_data:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-app
