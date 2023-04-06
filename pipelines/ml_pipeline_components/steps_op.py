@@ -190,11 +190,14 @@ def create_new_features(file_path: InputPath(str), output_path: OutputPath(str))
     X_pca.to_parquet(output_path)
 
 def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
+    import os
     import pandas as pd
     from feast import FeatureStore
 
     # Load the input Parquet file into a pandas dataframe
     entity_df = pd.read_parquet(file_path)
+
+    os.system("ls -lrt")
 
     fs = FeatureStore(repo_path="feature_repo")
 
