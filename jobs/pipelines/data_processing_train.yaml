@@ -36,7 +36,7 @@ spec:
         volumeMounts:
           - name: pvc-data
             mountPath: /data
-      - name: feast-apply
+      - name: build-train-data
         image: majinetudacitylearn/pipeline_train_data:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
