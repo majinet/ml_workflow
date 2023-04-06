@@ -3,8 +3,8 @@ from ml_pipeline_components import steps_op
 from ml_pipeline_components import session
 
 
-load_parquet_op = kfp.components.create_component_from_func(
-    func=steps_op.load_parquet_from_minio,
+load_df_op = kfp.components.create_component_from_func(
+    func=steps_op.load_df_from_postgresql,
     base_image='python:3.9',
     packages_to_install=['minio']
 )
@@ -26,11 +26,11 @@ put_parquet_op = kfp.components.create_component_from_func(
     description='ML Pipeline for train_data'
 )
 def ml_pipeline():
-    task_load_parquet = load_parquet_op(filename="titanic_train_entity.parquet")
-    task_build_train_data = build_train_data_op(task_load_parquet.output)
+    task_load_df = load_df_op(filename="titanic_train_entity.parquet")
+    task_build_train_data = build_train_data_op(task_load_df.output)
     task_put_parquet = put_parquet_op(task_build_train_data.output, filename="titanic_train_final.parquet")
 
-    task_build_train_data.after(task_load_parquet)
+    task_build_train_data.after(task_load_df)
     task_put_parquet.after(task_build_train_data)
 
 if __name__ == '__main__':

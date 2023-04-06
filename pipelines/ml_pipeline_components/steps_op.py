@@ -241,6 +241,37 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
     # Close the database connection
     engine.dispose()
 
+def load_df_from_postgresql(file_path: InputPath(str), filename: str):
+    import os
+    import pandas as pd
+    from sqlalchemy import create_engine
+    from datetime import datetime, timedelta
+    from feast.utils import make_df_tzaware
+
+    # Define the PostgreSQL connection parameters
+    hostname = 'postgresql.default.svc.cluster.local'
+    port = '5432'
+    database = 'feast'
+    username = 'feast'
+    password = 'feast'
+
+    # Create a SQLAlchemy engine object
+    engine = create_engine(f'postgresql://{username}:{password}@{hostname}:{port}/{database}')
+
+    # Read the DataFrame from the PostgreSQL database
+    df = pd.read_sql_table('titanic_train_entity', engine)
+
+    df['event_timestamp'] = datetime.now()
+
+    df = make_df_tzaware(df)
+    df['created'] = datetime.now()
+
+    print(f"write to table: {df}")
+
+    # Close the database connection
+    engine.dispose()
+
+
 def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
     from feast import FeatureStore, RepoConfig, RegistryConfig
     import pandas as pd
