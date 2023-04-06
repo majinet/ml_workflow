@@ -4,6 +4,7 @@ WORKDIR titanic_feature
 
 RUN pip3 install feast --upgrade --user
 RUN pip3 install psycopg2-binary --upgrade --user
+RUN pip3 install isoduration --upgrade --user
 
 COPY ./titanic_feature .
 
