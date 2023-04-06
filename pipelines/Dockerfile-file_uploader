@@ -3,6 +3,7 @@ FROM python:3.9-slim-buster
 WORKDIR pipelines
 
 RUN pip3 install pandas --upgrade --user
+RUN pip3 install fastparquet --upgrade --user
 RUN pip3 install kfp --upgrade --user
 RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 RUN pip3 install minio --upgrade --user
