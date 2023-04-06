@@ -193,11 +193,22 @@ def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
     import os
     import pandas as pd
     from feast import FeatureStore
+    from minio import Minio
+    from minio.error import S3Error
+
+    os.system("mkdir feature_repo")
+
+    client = Minio(
+        "minio.kubeflow.svc.cluster.local:9000",
+        access_key="QM3BXB99A35ACSX4WI3G",
+        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        secure=False,
+    )
+
+    client.fget_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
 
     # Load the input Parquet file into a pandas dataframe
     entity_df = pd.read_parquet(file_path)
-
-    os.system("ls -lrt")
 
     fs = FeatureStore(repo_path="../feature_repo")
 
