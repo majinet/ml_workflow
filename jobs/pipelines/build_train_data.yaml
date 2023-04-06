@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job-data-process-train
+  name: job-build-train-data
 spec:
   parallelism: 1
   ttlSecondsAfterFinished: 300
@@ -18,8 +18,8 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-kubeflow-pipe-data
       containers:
-      - name: data-process-train
-        image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
+      - name: build-train-data
+        image: majinetudacitylearn/pipeline_build_train_data:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-app

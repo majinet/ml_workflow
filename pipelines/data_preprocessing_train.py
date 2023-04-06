@@ -70,7 +70,7 @@ load_parquet_to_postgresql_op = create_component_from_func(
 )
 
 @dsl.pipeline(
-    name='train-data-pipeline',
+    name='pipeline-data-preprocessing_train',
     description='ML Pipeline for train_data'
 )
 def ml_pipeline():

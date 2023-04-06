@@ -22,7 +22,7 @@ put_parquet_op = kfp.components.create_component_from_func(
 )
 
 @kfp.dsl.pipeline(
-    name='train_data_pipeline',
+    name='pipeline-build-train-data',
     description='ML Pipeline for train_data'
 )
 def ml_pipeline():
