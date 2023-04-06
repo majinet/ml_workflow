@@ -8,4 +8,4 @@ RUN pip3 install minio --upgrade --user
 
 COPY ./pipelines/file_uploader.py .
 
-CMD ["python3", "--train-path", "/data", "--train-filename", "train", "--test-path", "/data", "--test-filename", "test", "file_uploader"]
+CMD ["python3", "file_uploader.py", "--train-path", "/data", "--train-filename", "train", "--test-path", "/data", "--test-filename", "test"]

@@ -64,7 +64,7 @@ if __name__ == "__main__":
         parser.add_argument('--test-filename', type=str, help='Path of the local file containing the Input 1 data.')
         args = parser.parse_args()
 
-        main(args.train_path, args.train_filename, args.train_ext, args.test_path, args.test_filename, args.test_ext)
+        main(args.train_path, args.train_filename, args.test_path, args.test_filename)
 
     except S3Error as exc:
         print("error occurred.", exc)
