@@ -4,6 +4,6 @@ WORKDIR titanic_feature
 
 RUN pip3 install feast --upgrade --user
 
-COPY ./feature_repo .
+COPY feature_repo .
 
 CMD ["feast", "apply"]
