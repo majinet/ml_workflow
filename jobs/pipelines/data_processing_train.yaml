@@ -34,8 +34,8 @@ spec:
         image: majinetudacitylearn/feast_apply:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
-      - name: pvc-data
-        mountPath: /data
+        - name: pvc-data
+          mountPath: /data
       containers:
       - name: build-train-data
         image: majinetudacitylearn/pipeline_build_train_data:v0.0.1
