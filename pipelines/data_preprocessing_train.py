@@ -76,7 +76,7 @@ load_parquet_to_postgresql_op = create_component_from_func(
 def ml_pipeline():
 
     task_startup_check = startup_check_op()
-    task_load_parquet = load_parquet_from_minio_op(filename="titanic_train.parquet")
+    task_load_parquet = load_parquet_from_minio_op(filename="train.parquet")
 
     task_extract_entity = extract_entity_op(task_load_parquet.output)
     task_extract_target = extract_target_op(task_load_parquet.output)
