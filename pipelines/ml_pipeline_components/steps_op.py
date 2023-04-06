@@ -205,6 +205,13 @@ def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
         entity_df=entity_df
     ).to_df()
 
+    print("----- Feature schema -----\n")
+    print(training_df.info())
+
+    print()
+    print("----- Example features -----\n")
+    print(training_df.head())
+
     training_df.to_parquet(output_path)
 
 def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
@@ -241,7 +248,7 @@ def load_parquet_to_postgresql(file_path: InputPath(str), filename: str):
     # Close the database connection
     engine.dispose()
 
-def load_df_from_postgresql(filename: str):
+def load_df_from_postgresql(filename: str, output_path: OutputPath(str)):
     import os
     import pandas as pd
     from sqlalchemy import create_engine
@@ -266,32 +273,9 @@ def load_df_from_postgresql(filename: str):
     df = make_df_tzaware(df)
     df['created'] = datetime.now()
 
-    print(f"write to table: {df}")
+    print(f"write to df: {df}")
+
+    df.to_parquet(output_path)
 
     # Close the database connection
     engine.dispose()
-
-
-def build_train_data(file_path: InputPath(str), output_path: OutputPath(str)):
-    from feast import FeatureStore, RepoConfig, RegistryConfig
-    import pandas as pd
-    from sqlalchemy import text, create_engine
-
-    entity_df = pd.read_parquet(file_path)
-
-    feature_store = FeatureStore(repo_path="titanic_feature/feature_repo")  # Initialize the feature store
-
-    feature_service = feature_store.get_feature_service("titanic_survive_svc_v1")
-    job = feature_store.get_historical_features(
-        features=feature_service,
-        entity_df=entity_df,
-    )
-
-    training_df = job.to_df()
-
-    print("----- Feature schema -----\n")
-    print(training_df.info())
-
-    print()
-    print("----- Example features -----\n")
-    print(training_df.head())
