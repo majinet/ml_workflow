@@ -46,8 +46,8 @@ jobs:
           script: |
             kubectl apply -f jobs/pipelines/data_processing_train.yaml
             sleep 60
-            kubectl wait --for=condition=complete --timeout=2400s job/job-data-process-train            
-            until kubectl get pods -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+            kubectl wait --for=condition=complete --timeout=2400s job/job-data-process-train
+            kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
       - name: run Pipeline (feast apply)
         uses: appleboy/ssh-action@master
         with:
@@ -58,7 +58,7 @@ jobs:
             kubectl apply -f jobs/pipelines/feast_apply.yaml
             sleep 60
             kubectl wait --for=condition=complete --timeout=2400s job/job-feast-apply
-            until kubectl get pods -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+            kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
       - name: run Pipeline (build train data)
         uses: appleboy/ssh-action@master
         with:
