@@ -39,7 +39,7 @@ Some common tools used in CI for Machine Learning include Jenkins, Travis CI, Ci
 
 ### Overall Architecture
 
-![Alt text](./Overall_Arch.jpg "CI Platform")
+![Alt text](screens/Overall_Arch.jpg "CI Platform")
 
 Core Components:
 
