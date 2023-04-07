@@ -41,11 +41,11 @@ jobs:
             kubectl apply -f jobs/pipelines/data_processing_train.yaml
             sleep 60
             kubectl wait --for=jsonpath='{.status.phase}'=Completed --timeout=2400s job/job-data-process-train            
-            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 2400s; done
             
             kubectl apply -f jobs/pipelines/feast_apply.yaml
             sleep 60
             kubectl wait --for=jsonpath='{.status.phase}'=Completed --timeout=2400s job/job-feast-apply
-            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 2400s; done
             
             kubectl apply -f jobs/pipelines/build_train_data.yaml
