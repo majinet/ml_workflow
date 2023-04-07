@@ -1,9 +1,8 @@
 #FROM python:3.9-slim-buster
-FROM alpine:latest
+FROM python:3.9-alpine
 
 WORKDIR pipelines
 
-RUN apk add --update python3=~3.9 py3-pip
 RUN pip3 install pandas fastparquet kfp minio --upgrade --user
 RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
