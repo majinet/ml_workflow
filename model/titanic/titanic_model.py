@@ -23,9 +23,9 @@ from minio import Minio
 
 def load_dataset():
     client = Minio(
-        "10.1.173.103:9000",
-        access_key="91v98eLB1zOwDPo8",
-        secret_key="6ZDwLVoC14AMOVCJozvJtIUjjwZfa0Ma",
+        "minio.kubeflow.svc.cluster.local:9000",
+        access_key="QM3BXB99A35ACSX4WI3G",
+        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
         secure=False,
     )
 

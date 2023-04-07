@@ -1,7 +1,9 @@
-FROM python:3.9-slim-buster
+#FROM python:3.9-slim-buster
+FROM alpine:latest
 
 WORKDIR pipelines
 
+RUN apk add --update python3=~3.9 py3-pip
 RUN pip3 install kfp --upgrade --user
 RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
