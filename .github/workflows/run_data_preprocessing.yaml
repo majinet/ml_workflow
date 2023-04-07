@@ -27,7 +27,7 @@ jobs:
           local_path: './jobs/*'
           remote_path: '/home/ubuntu/jobs'
           sftpArgs: '-o ConnectTimeout=5'
-      - name: run Pipeline
+      - name: run Pipeline (file upload)
         uses: appleboy/ssh-action@master
         with:
           host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
@@ -36,16 +36,34 @@ jobs:
           script: |
             kubectl apply -f jobs/pipelines/file_uploader.yaml         
             sleep 60
-            kubectl wait --for=jsonpath='{.status.phase}'=Completed --timeout=2400s job/job-file-uploader
-            
+            kubectl wait --for=condition=complete --timeout=2400s job/job-file-uploader
+      - name: run Pipeline (data preprocessing)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
             kubectl apply -f jobs/pipelines/data_processing_train.yaml
             sleep 60
-            kubectl wait --for=jsonpath='{.status.phase}'=Completed --timeout=2400s job/job-data-process-train            
-            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 2400s; done
-            
+            kubectl wait --for=condition=complete --timeout=2400s job/job-data-process-train            
+            until kubectl get pods -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+      - name: run Pipeline (feast apply)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
             kubectl apply -f jobs/pipelines/feast_apply.yaml
             sleep 60
-            kubectl wait --for=jsonpath='{.status.phase}'=Completed --timeout=2400s job/job-feast-apply
-            until kubectl get pods --all -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 2400s; done
-            
+            kubectl wait --for=condition=complete --timeout=2400s job/job-feast-apply
+            until kubectl get pods -n admin -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' | grep True ; do sleep 60; done
+      - name: run Pipeline (build train data)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |      
             kubectl apply -f jobs/pipelines/build_train_data.yaml
