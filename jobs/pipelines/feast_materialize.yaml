@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job-feast-apply
+  name: job-feast-materialize
 spec:
   parallelism: 1
   ttlSecondsAfterFinished: 300
   template:
     metadata:
       labels:
-        app: pipeline-feast-apply
+        app: pipeline-feast-materialize
     spec:
       volumes:
       - name: pvc-app
@@ -18,8 +18,8 @@ spec:
         persistentVolumeClaim:
           claimName: pvc-kubeflow-pipe-data
       containers:
-      - name: feast-apply
-        image: majinetudacitylearn/feast_apply:v0.0.1
+      - name: feast-materialize
+        image: majinetudacitylearn/feast_materialize:v0.0.1
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-data

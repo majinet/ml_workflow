@@ -45,9 +45,9 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           script: |
             kubectl apply -f jobs/pipelines/data_processing_train.yaml
-            sleep 60
-            kubectl wait --for=condition=complete --timeout=2400s job/job-data-process-train
-            kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
+            sleep 900
+            #kubectl wait --for=condition=complete --timeout=2400s job/job-data-process-train
+            #kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
       - name: run Pipeline (feast apply)
         uses: appleboy/ssh-action@master
         with:
@@ -56,9 +56,9 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           script: |
             kubectl apply -f jobs/pipelines/feast_apply.yaml
-            sleep 60
-            kubectl wait --for=condition=complete --timeout=2400s job/job-feast-apply
-            kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
+            sleep 300
+            #kubectl wait --for=condition=complete --timeout=2400s job/job-feast-apply
+            #kubectl wait --for=jsonpath='{.status.phase}'=Succeeded --timeout=2400s pod -l "pipelines.kubeflow.org/pipeline-sdk-type=kfp" -n admin
       - name: run Pipeline (build train data)
         uses: appleboy/ssh-action@master
         with:
@@ -67,3 +67,11 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           script: |      
             kubectl apply -f jobs/pipelines/build_train_data.yaml
+      - name: run Pipeline (feast materialize)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
+            kubectl apply -f jobs/pipelines/feast_materialize.yaml

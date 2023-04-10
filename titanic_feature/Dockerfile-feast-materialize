@@ -1,0 +1,10 @@
+FROM python:3.9-slim-buster
+#FROM python:3.9-alpine
+
+WORKDIR titanic_feature
+
+COPY ./titanic_feature .
+
+RUN ls .
+
+CMD ["python3", "titanic_cmd_materialize.py"]
