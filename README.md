@@ -1,6 +1,6 @@
 # About this project
 
-The objective of this project is to promote a MLOps Level 2 to help companies reduce their operational costs when developing machine learning applications by standardizing and automating the ML workflow.
+The objective of this project is to create a Cloud Native Computing Foundation (CNCF) standard Containeralize Platform for Data Scientists, I aspire to create a cloud-agnostic platform, seamlessly integrating AI to deliver complete automation and minimize operational costs, while reducing human error. As I look ahead, I firmly believe that the integration of DevOps, Containeralize Platform, and AI will revolutionize the tech industry. Leveraging these cutting-edge technologies, we can unlock immense productivity gains, streamline processes, and minimize downtime, while enhancing the overall customer experience.
 
 # Machine Learning Devops (MLOps)
 
@@ -66,6 +66,19 @@ Scalability: The CNCF compliance tools provide best practices for designing scal
 
 Community Support: CNCF compliance tools are developed and maintained by a large community of experts and contributors. This means that MLOps teams can benefit from a wide range of resources, including documentation, tutorials, and support from the community.
 
+### Why create a cloud-agnostic platform in MLOps
+
+There are several benefits of creating a cloud-agnostic platform, including:
+
+Flexibility and freedom: A cloud-agnostic platform allows businesses to choose the cloud provider that best meets their needs, without being locked into a specific vendor or technology. This provides greater flexibility and freedom to adapt to changing business requirements.
+
+Cost savings: By leveraging multiple cloud providers, businesses can negotiate better pricing and take advantage of cost savings opportunities, such as spot instances or reserved instances.
+
+Improved scalability: A cloud-agnostic platform can be scaled up or down quickly and easily, allowing businesses to respond to changes in demand without having to worry about infrastructure limitations or vendor lock-in.
+
+Portability: With a cloud-agnostic platform, applications can be easily moved from one cloud provider to another without the need for extensive modifications or changes to the underlying architecture.
+
+Reduced risk: By avoiding vendor lock-in and relying on multiple cloud providers, businesses can reduce their risk of downtime or service disruptions caused by outages or other issues with a single provider.
 
 ### Why use Open-source tools in MLOps
 

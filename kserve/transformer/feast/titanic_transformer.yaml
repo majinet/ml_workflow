@@ -1,0 +1,24 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "Tensorflow-titanic-transformer"
+spec:
+  transformer:
+    containers:
+    - image: kserve/titanic-transformer:latest
+      name: titanic-container
+      command:
+      - "python"
+      - "-m"
+      - "titanic_transformer"
+      args:
+      - --feast_serving_url
+      - feast-feature-server.default.svc.cluster.local:6566
+      - --entity_ids
+      - passenger
+      - --feature_refs
+      - titanic_survive_svc_v1
+  predictor:
+    tensorflow:
+      serviceAccountName: minio-fullaccess
+      storageUri: "s3://demo-bucket/model"

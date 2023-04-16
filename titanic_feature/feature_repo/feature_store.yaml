@@ -10,9 +10,16 @@ registry:
     user: feast
     password: feast
 online_store:
-    type: redis
-    redis_type: redis_cluster
-    connection_string: "redis-master.default.svc.cluster.local:6379,ssl=false,password=bvedFOdDcY"
+    type: postgres
+    host: postgresql.default.svc.cluster.local
+    port: 5432
+    database: feast
+    db_schema: public
+    user: feast
+    password: feast
+    #type: redis
+    #redis_type: redis_cluster
+    #connection_string: "redis-master.default.svc.cluster.local:6379,ssl=false,password=bvedFOdDcY"
 offline_store:
     type: postgres
     host: postgresql.default.svc.cluster.local
