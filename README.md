@@ -1,6 +1,6 @@
 # About this project
 
-The objective of this project is to create a Cloud Native Computing Foundation (CNCF) standard Containeralize Platform for Data Scientists, I aspire to create a cloud-agnostic platform, seamlessly integrating AI to deliver complete automation and minimize operational costs, while reducing human error. As I look ahead, I firmly believe that the integration of DevOps, Containeralize Platform, and AI will revolutionize the tech industry. Leveraging these cutting-edge technologies, we can unlock immense productivity gains, streamline processes, and minimize downtime, while enhancing the overall customer experience.
+The objective of this project is to create a Cloud Native Computing Foundation (CNCF) standard Containeralize Platform for Data Scientists, I aspire to create a cloud-agnostic, decoupled and inter-dependent platform, seamlessly integrating AI to deliver complete automation and minimize operational costs, while reducing human error. As I look ahead, I firmly believe that the integration of DevOps, Containeralize Platform, and AI will revolutionize the tech industry. Leveraging these cutting-edge technologies, we can unlock immense productivity gains, streamline processes, and minimize downtime, while enhancing the overall customer experience.
 
 # Machine Learning Devops (MLOps)
 
