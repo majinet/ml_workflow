@@ -20,6 +20,22 @@ spec:
       containers:
       - name: file-uploader
         image: majinetudacitylearn/file_uploader:v0.0.1
+        command:
+          - "python3"
+          - "file_uploader.py"
+          - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
+          - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+        env:
+          - name: MINIO_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: AWS_ACCESS_KEY_ID
+          - name: MINIO_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: AWS_SECRET_ACCESS_KEY
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-data

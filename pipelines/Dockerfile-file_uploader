@@ -7,5 +7,3 @@ RUN pip3 install pandas fastparquet kfp minio --upgrade --user
 RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
 COPY ./pipelines/file_uploader.py .
-
-CMD ["python3", "file_uploader.py", "--train-path", "/data", "--train-filename", "train", "--test-path", "/data", "--test-filename", "test"]

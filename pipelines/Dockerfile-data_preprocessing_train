@@ -8,5 +8,3 @@ RUN echo 'export PATH=$PATH:~/.local/bin' | tee -a ~/.bashrc
 
 COPY ./pipelines/ml_pipeline_components ml_pipeline_components
 COPY ./pipelines/data_preprocessing_train.py .
-
-CMD [ "python3", "data_preprocessing_train.py"]

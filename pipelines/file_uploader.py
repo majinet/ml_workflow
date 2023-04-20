@@ -12,13 +12,13 @@ def to_parquet(path: str, df: pd.DataFrame):
     df['event_timestamp'] = datetime.now() - timedelta(days=2)
     df.to_parquet(path)
 
-def main(train_path: str, train_filename: str, test_path: str, test_filename: str):
+def main(train_path: str, train_filename: str, test_path: str, test_filename: str, minio_access_key: str, minio_secret_key: str):
     # Create a client with the MinIO server playground, its access key
     # and secret key.
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
-        access_key="QM3BXB99A35ACSX4WI3G",
-        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        access_key=minio_access_key,
+        secret_key=minio_secret_key,
         secure=False,
     )
 
@@ -63,9 +63,11 @@ if __name__ == "__main__":
         parser.add_argument('--train-filename', type=str, help='Path of the local file containing the Input 1 data.')
         parser.add_argument('--test-path', type=str, help='Path of the local file containing the Input 1 data.')
         parser.add_argument('--test-filename', type=str, help='Path of the local file containing the Input 1 data.')
+        parser.add_argument('--minio-access-key', type=str, help='Minio Access Key.')
+        parser.add_argument('--minio-secret-key', type=str, help='Minio Secret Key.')
         args = parser.parse_args()
 
-        main(args.train_path, args.train_filename, args.test_path, args.test_filename)
+        main(args.train_path, args.train_filename, args.test_path, args.test_filename, args.minio_access_key, args.minio_secret_key)
 
     except S3Error as exc:
         print("error occurred.", exc)

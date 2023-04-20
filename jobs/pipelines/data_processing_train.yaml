@@ -20,6 +20,22 @@ spec:
       containers:
       - name: data-process-train
         image: majinetudacitylearn/pipeline_data_preprocessing_train:v0.0.1
+        command:
+          - "python3"
+          - "data_preprocessing_train.py"
+          - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
+          - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+        env:
+        - name: MINIO_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_ACCESS_KEY_ID
+        - name: MINIO_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: AWS_SECRET_ACCESS_KEY
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-app

@@ -6,29 +6,29 @@ from kfp.components import InputPath, OutputPath, create_component_from_func
 def startup_check():
     print("startup check")
 
-def load_parquet_from_minio(output_path: OutputPath(str), filename: str):
+def load_parquet_from_minio(output_path: OutputPath(str), filename: str, minio_access_key: str, minio_secret_key: str):
     import os
     from minio import Minio
     from minio.error import S3Error
 
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
-        access_key="QM3BXB99A35ACSX4WI3G",
-        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        access_key=minio_access_key,
+        secret_key=minio_secret_key,
         secure=False,
     )
 
     client.fget_object("demo-bucket", filename, output_path)
 
-def put_parquet_into_minio(file_path: InputPath(str), filename: str):
+def put_parquet_into_minio(file_path: InputPath(str), filename: str, minio_access_key: str, minio_secret_key: str):
     import os
     from minio import Minio
     from minio.error import S3Error
 
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
-        access_key="QM3BXB99A35ACSX4WI3G",
-        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        access_key=minio_access_key,
+        secret_key=minio_secret_key,
         secure=False,
     )
 

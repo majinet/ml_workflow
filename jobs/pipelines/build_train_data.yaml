@@ -20,6 +20,26 @@ spec:
       containers:
       - name: build-train-data
         image: majinetudacitylearn/pipeline_build_train_data:v0.0.1
+        command:
+          - "python3"
+          - "build_train_data.py"
+          - "--train-path=/data"
+          - "--train-filename=train"
+          - "--test-path=/data"
+          - "--test-filename=test"
+          - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
+          - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+        env:
+          - name: MINIO_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: AWS_ACCESS_KEY_ID
+          - name: MINIO_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: minio-secret
+                key: AWS_SECRET_ACCESS_KEY
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-app

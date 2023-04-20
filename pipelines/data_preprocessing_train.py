@@ -1,3 +1,4 @@
+import argparse
 import sys
 import kfp
 from kfp import dsl
@@ -73,10 +74,10 @@ load_parquet_to_postgresql_op = create_component_from_func(
     name='pipeline-data-preprocessing_train',
     description='ML Pipeline for train_data'
 )
-def ml_pipeline():
+def ml_pipeline(minio_access_key, minio_secret_key):
 
     task_startup_check = startup_check_op()
-    task_load_parquet = load_parquet_from_minio_op(filename="train.parquet")
+    task_load_parquet = load_parquet_from_minio_op(filename="train.parquet", minio_access_key=minio_access_key, minio_secret_key=minio_secret_key)
 
     task_extract_entity = extract_entity_op(task_load_parquet.output)
     task_extract_target = extract_target_op(task_load_parquet.output)
@@ -107,6 +108,15 @@ if __name__ == '__main__':
     KUBEFLOW_USERNAME = "admin"
     KUBEFLOW_PASSWORD = "admin"
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--minio-access-key",
+                        type=str,
+                        help="Minio Access Key")
+    parser.add_argument("--minio-secret-key",
+                        type=str,
+                        help='Minio Secret Key')
+    parsed_args, _ = parser.parse_known_args()
+
     auth_session = session.get_istio_auth_session(
         url=KUBEFLOW_ENDPOINT,
         username=KUBEFLOW_USERNAME,
@@ -122,7 +132,8 @@ if __name__ == '__main__':
     result = client.create_run_from_pipeline_func(
         ml_pipeline,
         arguments={
-
+            'minio_access_key': parsed_args.minio_access_key,
+            'minio_secret-key': parsed_args.minio_secret_key
         },
         namespace='admin'
     )
