@@ -22,6 +22,7 @@ from minio import Minio
 
 
 def load_dataset(minio_access_key: str, minio_secret_key: str):
+
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
         access_key=minio_access_key,
@@ -81,6 +82,9 @@ def main(args):
     BATCH_SIZE = BATCH_SIZE_PER_REPLICA * strategy.num_replicas_in_sync
 
     # Datasets need to be created after instantiation of `MultiWorkerMirroredStrategy`
+    print(f"access_key: {args.minio_access_key}")
+    print(f"secret_key: {args.minio_secret_key}")
+
     train_dataset, test_dataset = load_dataset(args.minio_access_key, args.minio_secret_key)
     train_dataset = train_dataset.batch(batch_size=BATCH_SIZE)
     test_dataset = test_dataset.batch(batch_size=BATCH_SIZE)

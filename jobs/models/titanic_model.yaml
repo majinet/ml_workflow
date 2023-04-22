@@ -26,7 +26,7 @@ spec:
           - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
           - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
         env:
-        - name: MINIO_ACCESS_KEY_ID
+        - name: `MINIO_ACCESS_KEY_ID`
           valueFrom:
             secretKeyRef:
               name: minio-secret
