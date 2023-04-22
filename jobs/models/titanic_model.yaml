@@ -36,6 +36,14 @@ spec:
             secretKeyRef:
               name: minio-secret
               key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_REGION
+          value: us-east-1
+        - name: S3_ENDPOINT
+          value: minio.kubeflow.svc.cluster.local:9000
+        - name: S3_USE_HTTPS
+          value: 0
+        - name: S3_VERIFY_SSL
+          value: 0
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-app
