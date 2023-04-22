@@ -23,6 +23,10 @@ spec:
         command:
           - "python3"
           - "file_uploader.py"
+          - "--train-path=/data"
+          - "--train-filename=train"
+          - "--test-path=/data"
+          - "--test-filename=test"
           - "--minio-access-key=$(MINIO_ACCESS_KEY_ID)"
           - "--minio-secret-key=$(MINIO_SECRET_ACCESS_KEY)"
         env:
