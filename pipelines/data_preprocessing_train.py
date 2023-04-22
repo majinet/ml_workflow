@@ -141,7 +141,7 @@ if __name__ == '__main__':
         ml_pipeline,
         arguments={
             'minio_access_key': parsed_args.minio_access_key,
-            'minio_secret-key': parsed_args.minio_secret_key
+            'minio_secret_key': parsed_args.minio_secret_key
         },
         namespace='admin'
     )
