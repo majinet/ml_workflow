@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from numpy.random import seed
 import tensorflow as tf
+import tensorflow_io as tfio
 tf.random.set_seed(221)
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
@@ -104,7 +105,7 @@ def main(args):
         logging.info("loss={:.4f}".format(eval_loss))
         logging.info("accuracy={:.4f}".format(eval_acc))
 
-        multi_worker_model.save(f"s3://demo-bucket/model")
+        multi_worker_model.save(tf.io.gfile.join("s3://demo-bucket", "model")
 
 
 if __name__ == '__main__':
