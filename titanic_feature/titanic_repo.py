@@ -133,7 +133,7 @@ if __name__ == '__main__':
     fs = FeatureStore(repo_path="feature_repo")
     fs.apply(
         [titanic_train_pca_source, titanic_train_target_source, titanic_train_source, passenger, titanic_train_pca_fv,
-         titanic_train_fv, titanic_survive_svc_v1],
+         titanic_train_fv, titanic_target_fv, titanic_survive_svc_v1],
         partial=False,
     )
 
