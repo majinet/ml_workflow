@@ -26,7 +26,7 @@ put_parquet_op = kfp.components.create_component_from_func(
     name='pipeline-build-train-data',
     description='ML Pipeline for train_data'
 )
-def ml_pipeline():
+def ml_pipeline(minio_access_key, minio_secret_key):
     task_load_df = load_df_op(filename="titanic_train_entity.parquet")
     task_build_train_data = build_train_data_op(task_load_df.output)
     task_put_parquet = put_parquet_op(task_build_train_data.output, filename="titanic_train_final.parquet", minio_access_key=minio_access_key, minio_secret_key=minio_secret_key)
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         ml_pipeline,
         arguments={
             'minio_access_key': parsed_args.minio_access_key,
-            'minio_secret-key': parsed_args.minio_secret_key
+            'minio_secret_key': parsed_args.minio_secret_key
         },
         namespace = "admin",
     )
