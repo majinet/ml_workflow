@@ -1,4 +1,4 @@
-name: Build Data Preprocessing Pipeline
+name: Run Data Preprocessing Pipeline
 
 on:
   workflow_dispatch:

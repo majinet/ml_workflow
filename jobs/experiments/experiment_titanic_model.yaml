@@ -1,0 +1,85 @@
+apiVersion: "kubeflow.org/v1beta1"
+kind: Experiment
+metadata:
+  namespace: admin
+  name: titanic-model-bayesianoptimization
+spec:
+  objective:
+    type: maximize
+    goal: 0.70
+    objectiveMetricName: Validation-accuracy
+    additionalMetricNames:
+      - Train-accuracy
+  algorithm:
+    algorithmName: bayesianoptimization
+    algorithmSettings:
+      - name: "random_state"
+        value: "10"
+  parallelTrialCount: 3
+  maxTrialCount: 12
+  maxFailedTrialCount: 3
+  parameters:
+    - name: lr
+      parameterType: double
+      feasibleSpace:
+        min: "0.01"
+        max: "0.03"
+    - name: optimizer
+      parameterType: categorical
+      feasibleSpace:
+        list:
+          - sgd
+          - adam
+          - ftrl
+  trialTemplate:
+    primaryContainerName: titanic-model
+    trialParameters:
+      - name: learningRate
+        description: Learning rate for the training model
+        reference: lr
+      - name: optimizer
+        description: Training model optimizer (sdg, adam or ftrl)
+        reference: optimizer
+    trialSpec:
+      apiVersion: kubeflow.org/v1
+      kind: TFJob
+      spec:
+        tfReplicaSpecs:
+          Worker:
+            replicas: 1
+            restartPolicy: Never
+            template:
+              metadata:
+                annotations:
+                  sidecar.istio.io/inject: "false"
+              spec:
+                volumes:
+                  - name: pvc-app
+                    persistentVolumeClaim:
+                      claimName: pvc-kubeflow-pipe-app
+                containers:
+                  - name: titanic-model
+                    image: majinetudacitylearn/titanic_model:v0.1
+                    imagePullPolicy: Always
+                    volumeMounts:
+                      - name: pvc-app
+                        mountPath: /app
+                    command:
+                      - "python3"
+                      - "/app/titanic/titanic_model.py"
+                      - "--batch-size=64"
+                      - "--lr=${trialParameters.learningRate}"
+                      - "--optimizer=${trialParameters.optimizer}"
+                      - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
+                      - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+                      env:
+                      - name: MINIO_ACCESS_KEY_ID
+                        valueFrom:
+                          secretKeyRef:
+                            name: minio-secret
+                            key: AWS_ACCESS_KEY_ID
+                      - name: MINIO_SECRET_ACCESS_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: minio-secret
+                            key: AWS_SECRET_ACCESS_KEY

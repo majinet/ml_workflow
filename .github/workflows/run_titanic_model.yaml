@@ -1,0 +1,37 @@
+name: Run Titanic model
+
+on:
+  workflow_dispatch:
+  #workflow_run:
+  #  workflows: [Build Pipelines components]
+  #  types:
+  #    - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9" ]
+    environment: development
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: 'ubuntu'
+          server: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          ssh_private_key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          local_path: './jobs/*'
+          remote_path: '/home/ubuntu/jobs'
+          sftpArgs: '-o ConnectTimeout=5'
+      - name: run Pipeline (file upload)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
+          username: ${{ vars.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
+            kubectl apply -f jobs/models/titanic_model.yaml
