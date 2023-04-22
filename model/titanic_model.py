@@ -70,7 +70,7 @@ def main(args):
     os.environ['AWS_ACCESS_KEY_ID'] = args.minio_access_key
     os.environ['AWS_SECRET_ACCESS_KEY'] = args.minio_secret_key
     os.environ['AWS_REGION'] = "us-east-1"
-    os.environ['S3_ENDPOINT'] = "minio.kubeflow.svc.cluster.local:9000"
+    os.environ['S3_ENDPOINT'] = "https://minio.kubeflow.svc.cluster.local:9000"
     os.environ['S3_USE_HTTPS'] = "0"
     os.environ['S3_VERIFY_SSL'] = "0"
 
