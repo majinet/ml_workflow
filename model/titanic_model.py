@@ -21,8 +21,10 @@ logging.getLogger().setLevel(logging.INFO)
 
 from minio import Minio
 
+minio_access_key = os.environ['MINIO_ACCESS_KEY_ID']
+minio_secret_key = os.environ['MINIO_SECRET_ACCESS_KEY']
 
-def load_dataset(minio_access_key: str, minio_secret_key: str):
+def load_dataset():
 
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
@@ -67,13 +69,6 @@ def model(args):
     tf.keras.backend.set_value(model.optimizer.learning_rate, args.learning_rate)
     return model
 def main(args):
-    """os.environ['AWS_ACCESS_KEY_ID'] = args.minio_access_key
-    os.environ['AWS_SECRET_ACCESS_KEY'] = args.minio_secret_key
-    os.environ['AWS_REGION'] = "us-east-1"
-    os.environ['S3_ENDPOINT'] = "minio.kubeflow.svc.cluster.local:9000"
-    os.environ['S3_USE_HTTPS'] = "0"
-    os.environ['S3_VERIFY_SSL'] = "0"
-    """
 
     #MultiWorkerMirroredStrategy creates copies of all variables in the model's
     #layers on each device across all workers
@@ -84,7 +79,7 @@ def main(args):
     BATCH_SIZE = BATCH_SIZE_PER_REPLICA * strategy.num_replicas_in_sync
 
     # Datasets need to be created after instantiation of `MultiWorkerMirroredStrategy`
-    train_dataset, test_dataset = load_dataset(args.minio_access_key, args.minio_secret_key)
+    train_dataset, test_dataset = load_dataset()
     train_dataset = train_dataset.batch(batch_size=BATCH_SIZE)
     test_dataset = test_dataset.batch(batch_size=BATCH_SIZE)
 
@@ -126,11 +121,5 @@ if __name__ == '__main__':
                      default='adam',
                      metavar="N",
                      help='optimizer')
-  parser.add_argument("--minio-access-key",
-                      type=str,
-                      help="Minio Access Key")
-  parser.add_argument("--minio-secret-key",
-                      type=str,
-                      help='Minio Secret Key')
   parsed_args, _ = parser.parse_known_args()
   main(parsed_args)

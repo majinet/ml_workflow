@@ -23,8 +23,6 @@ spec:
         command:
           - "python3"
           - "titanic_model.py"
-          - "--minio-access-key=$(MINIO_ACCESS_KEY_ID)"
-          - "--minio-secret-key=$(MINIO_SECRET_ACCESS_KEY)"
         env:
         - name: MINIO_ACCESS_KEY_ID
           valueFrom:
@@ -41,7 +39,7 @@ spec:
         - name: S3_ENDPOINT
           value: minio.kubeflow.svc.cluster.local:9000
         - name: S3_USE_HTTPS
-          value: "1"
+          value: "0"
         - name: S3_VERIFY_SSL
           value: "0"
         imagePullPolicy: Always
