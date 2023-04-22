@@ -27,34 +27,34 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: pipelines/Dockerfile-file_uploader
+          file: pipelines/Dockerfile-titanic-model-file_uploader
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/file_uploader:v0.0.1
       - name: Build and push (data_preprocessing_train)
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: pipelines/Dockerfile-data_preprocessing_train
+          file: pipelines/Dockerfile-titanic-model-data_preprocessing_train
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline_data_preprocessing_train:v0.0.1
       - name: Build and push (feast apply)
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: titanic_feature/Dockerfile-feast-apply
+          file: titanic_feature/Dockerfile-titanic-model-feast-apply
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/feast_apply:v0.0.1
       - name: Build and push (feast materialize)
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: titanic_feature/Dockerfile-feast-materialize
+          file: titanic_feature/Dockerfile-titanic-model-feast-materialize
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/feast_materialize:v0.0.1
       - name: Build and push (build_train_data)
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: pipelines/Dockerfile-build_train_data
+          file: pipelines/Dockerfile-titanic-model-build_train_data
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pipeline_build_train_data:v0.0.1
