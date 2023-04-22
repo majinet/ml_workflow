@@ -27,7 +27,7 @@ jobs:
           local_path: './jobs/*'
           remote_path: '/home/ubuntu/jobs'
           sftpArgs: '-o ConnectTimeout=5'
-      - name: run Pipeline (file upload)
+      - name: train model (titanic)
         uses: appleboy/ssh-action@master
         with:
           host: ${{ vars.AWS_EC2_CONTROL_PLANE_IP }}
