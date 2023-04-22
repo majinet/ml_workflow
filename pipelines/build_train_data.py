@@ -13,7 +13,7 @@ load_df_op = kfp.components.create_component_from_func(
 build_train_data_op = kfp.components.create_component_from_func(
     func=steps_op.build_train_data,
     base_image='python:3.9',
-    packages_to_install=['numpy', 'pandas', 'psycopg2', 'fastparquet', 'scikit-learn', 'xgboost', 'feast', 'minio']
+    packages_to_install=['numpy', 'pandas', 'psycopg2', 'fastparquet', 'scikit-learn', 'xgboost', 'feast', 'minio', 'redis']
 )
 
 put_parquet_op = kfp.components.create_component_from_func(
