@@ -105,7 +105,7 @@ def main(args):
         logging.info("loss={:.4f}".format(eval_loss))
         logging.info("accuracy={:.4f}".format(eval_acc))
 
-        multi_worker_model.save(tf.io.gfile.join("s3://demo-bucket", "model")
+        multi_worker_model.save(tf.io.gfile.join("s3://demo-bucket", "model"))
 
 
 if __name__ == '__main__':
