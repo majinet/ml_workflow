@@ -27,8 +27,8 @@ spec:
           - "--train-filename=train"
           - "--test-path=/data"
           - "--test-filename=test"
-          - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
-          - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+          - "--minio-access-key=$(MINIO_ACCESS_KEY_ID)"
+          - "--minio-secret-key=$(MINIO_SECRET_ACCESS_KEY)"
         env:
           - name: MINIO_ACCESS_KEY_ID
             valueFrom:

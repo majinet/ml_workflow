@@ -70,6 +70,12 @@ load_parquet_to_postgresql_op = create_component_from_func(
     packages_to_install=['minio', 'SQLAlchemy', 'pandas', 'psycopg2', 'pyarrow', 'fastparquet', 'feast']
 )
 
+put_parquet_op = kfp.components.create_component_from_func(
+    func=steps_op.put_parquet_into_minio,
+    base_image='python:3.9',
+    packages_to_install=['minio']
+)
+
 @dsl.pipeline(
     name='pipeline-data-preprocessing_train',
     description='ML Pipeline for train_data'
@@ -81,6 +87,7 @@ def ml_pipeline(minio_access_key, minio_secret_key):
 
     task_extract_entity = extract_entity_op(task_load_parquet.output)
     task_extract_target = extract_target_op(task_load_parquet.output)
+
     task_data_clean = data_clean_op(task_load_parquet.output)
     task_create_new_features = create_new_features_op(task_data_clean.output)
 
@@ -98,6 +105,7 @@ def ml_pipeline(minio_access_key, minio_secret_key):
 
     task_titanic_train_entity.after(task_extract_entity)
     task_titanic_train_target.after(task_extract_target)
+
     task_titanic_train_features.after(task_data_clean)
     task_titanic_train_pca_features.after(task_create_new_features)
 

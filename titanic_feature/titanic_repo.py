@@ -1,5 +1,5 @@
 # This is an example feature definition file
-
+import argparse
 from datetime import timedelta
 
 import pandas as pd
@@ -97,16 +97,39 @@ titanic_train_fv = FeatureView(
     source=titanic_train_source,
 )
 
+titanic_target_fv = FeatureView(
+    # The unique name of this feature view. Two feature views in a single
+    # project cannot have the same name
+    name="titanic_target_fv",
+    entities=[passenger],
+    ttl=timedelta(days=1),
+    schema=[
+        Field(name="Survived", dtype=Int64),
+    ],
+    online=True,
+    source=titanic_train_target_source,
+)
+
 # This groups features into a model version
 titanic_survive_svc_v1 = FeatureService(
     name="titanic_survive_svc_v1",
     features=[
         titanic_train_pca_fv,  # Sub-selects a feature from a feature view
         titanic_train_fv,
+        titanic_target_fv,
     ],
 )
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--minio-access-key",
+                        type=str,
+                        help="Minio Access Key")
+    parser.add_argument("--minio-secret-key",
+                        type=str,
+                        help='Minio Secret Key')
+    parsed_args, _ = parser.parse_known_args()
+
     fs = FeatureStore(repo_path="feature_repo")
     fs.apply(
         [titanic_train_pca_source, titanic_train_target_source, titanic_train_source, passenger, titanic_train_pca_fv,
@@ -116,8 +139,8 @@ if __name__ == '__main__':
 
     client = Minio(
         "minio.kubeflow.svc.cluster.local:9000",
-        access_key="QM3BXB99A35ACSX4WI3G",
-        secret_key="5Adjl44njceCYbz+6B7n34y8dwpG0nhY0SsKP+ZT",
+        access_key=parsed_args.minio_access_key,
+        secret_key=parsed_args.minio_secret_key,
         secure=False,
     )
 

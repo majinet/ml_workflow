@@ -8,5 +8,3 @@ RUN pip3 install minio feast psycopg2-binary isoduration --upgrade --user
 COPY ./titanic_feature .
 
 RUN ls .
-
-CMD ["python3", "titanic_repo.py"]
