@@ -70,3 +70,16 @@ spec:
                       - "--batch-size=64"
                       - "--lr=${trialParameters.learningRate}"
                       - "--optimizer=${trialParameters.optimizer}"
+                      - "--minio-access-key=${MINIO_ACCESS_KEY_ID}"
+                      - "--minio-secret-key=${MINIO_SECRET_ACCESS_KEY}"
+                      env:
+                      - name: MINIO_ACCESS_KEY_ID
+                        valueFrom:
+                          secretKeyRef:
+                            name: minio-secret
+                            key: AWS_ACCESS_KEY_ID
+                      - name: MINIO_SECRET_ACCESS_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: minio-secret
+                            key: AWS_SECRET_ACCESS_KEY

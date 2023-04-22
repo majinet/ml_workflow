@@ -124,6 +124,20 @@ Resource Efficiency: Containers allow for more efficient use of resources, such 
 Overall, containerization infrastructure provides a more efficient and streamlined way to develop, test, and deploy machine learning systems, leading to faster time-to-market and increased agility.
 
 
+### What is right size for DevOps team?
+
+DevOps team members consist of :
+- Cloud Engineers
+- Network Engineers
+- Developers (Java, Python)
+- Operators (operate and monitor system)
+- Security experts
+- Database Administrators
+- Quality Assurance Engineers
+- DevOps Engineers / Automation experts
+- Solution Architects
+- Project Managers
+
 ## Continuous Deployment (CD)
 
 ### TBC
