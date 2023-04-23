@@ -23,6 +23,7 @@ from minio import Minio
 
 minio_access_key = os.environ['MINIO_ACCESS_KEY_ID']
 minio_secret_key = os.environ['MINIO_SECRET_ACCESS_KEY']
+s3_endpoint = os.environ['S3_ENDPOINT']
 
 def load_dataset():
 
@@ -54,6 +55,49 @@ def load_dataset():
     train = train_dataset.cache().shuffle(2000).repeat()
 
     return train, test_dataset
+
+def export_model(model_dir: str,export_bucket: str,model_name: str,model_version: int,):
+    import boto3
+    from botocore.client import Config
+    s3 = boto3.client(
+        "s3",
+        endpoint_url=s3_endpoint,
+        aws_access_key_id=minio_access_key,
+        aws_secret_access_key=minio_secret_key,
+        config=Config(signature_version="s3v4"),
+        use_ssl=False,
+        verify=False,
+    )
+
+    # Create export bucket if it does not yet exist
+    response = s3.list_buckets()
+    export_bucket_exists = False
+
+    for bucket in response["Buckets"]:
+        if bucket["Name"] == export_bucket:
+            export_bucket_exists = True
+
+        if not export_bucket_exists:
+            s3.create_bucket(ACL="public-read-write", Bucket=export_bucket)
+
+    # Save model files to S3
+    for root, dirs, files in os.walk(model_dir):
+        for filename in files:
+            local_path = os.path.join(root, filename)
+            s3_path = os.path.relpath(local_path, model_dir)
+
+            s3.upload_file(
+                local_path,
+                export_bucket,
+                f"models/{model_name}/{model_version}/{s3_path}",
+                ExtraArgs={"ACL": "public-read"},
+            )
+
+    response = s3.list_objects(Bucket=export_bucket)
+    print(f"All objects in {export_bucket}:")
+
+    for file in response["Contents"]:
+        print("{}/{}".format(export_bucket, file["Key"]))
 
 def model(args):
     seed(1)
@@ -101,8 +145,9 @@ def main(args):
         logging.info("loss={:.4f}".format(eval_loss))
         logging.info("accuracy={:.4f}".format(eval_acc))
 
-        multi_worker_model.save(tf.io.gfile.join("s3://demo-bucket", "model"))
-
+        #multi_worker_model.save(tf.io.gfile.join("s3://demo-bucket", "model"))
+        multi_worker_model.save("titanic_model")
+        export_model("titanic_model", "demo-bucket", "titanic", 1)
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
