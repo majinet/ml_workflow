@@ -3,7 +3,7 @@ FROM python:3.9-slim-buster
 
 WORKDIR titanic_feature
 
-RUN pip3 install minio feast[redis] psycopg2-binary isoduration --upgrade --user
+RUN pip3 install minio feast feast-postgres isoduration --upgrade --user
 
 COPY ./titanic_feature .
 

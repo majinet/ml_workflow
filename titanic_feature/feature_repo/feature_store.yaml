@@ -1,7 +1,7 @@
 project: titanic_feature
 provider: local
 registry:
-    registry_store_type: PostgreSQLRegistryStore
+    registry_store_type: feast_postgres.PostgreSQLRegistryStore
     path: feast_registry
     host: postgresql.default.svc.cluster.local
     port: 5432
@@ -10,18 +10,18 @@ registry:
     user: feast
     password: feast
 online_store:
-    #type: postgres
-    #host: postgresql.default.svc.cluster.local
-    #port: 5432
-    #database: feast
-    #db_schema: public
-    #user: feast
-    #password: feast
-    type: redis
-    redis_type: redis_cluster
-    connection_string: "redis-master.default.svc.cluster.local:6379,ssl=false,password=bvedFOdDcY"
+    type: feast_postgres.PostgreSQLOnlineStore
+    host: postgresql.default.svc.cluster.local
+    port: 5432
+    database: feast
+    db_schema: feature_store
+    user: feast
+    password: feast
+    #type: redis
+    #redis_type: redis_cluster
+    #connection_string: "redis-master.default.svc.cluster.local:6379,ssl=false,password=bvedFOdDcY"
 offline_store:
-    type: postgres
+    type: feast_postgres.PostgreSQLOfflineStore
     host: postgresql.default.svc.cluster.local
     port: 5432
     database: feast
