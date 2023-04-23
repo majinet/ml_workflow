@@ -6,5 +6,8 @@ WORKDIR titanic_feature
 RUN pip3 install minio feast[redis] psycopg2-binary isoduration --upgrade --user
 
 COPY ./titanic_feature .
+WORKDIR feature_repo
 
 RUN ls .
+
+CMD ["feast", "apply"]

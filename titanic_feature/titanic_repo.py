@@ -110,6 +110,7 @@ titanic_target_fv = FeatureView(
     source=titanic_train_target_source,
 )
 
+"""
 # This groups features into a model version
 titanic_survive_svc_v1 = FeatureService(
     name="titanic_survive_svc_v1",
@@ -146,7 +147,6 @@ if __name__ == '__main__':
 
     client.fput_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
 
-"""
 # Defines a way to push data (to be available offline, online or both) into Feast.
 titanic_survive_push_source = PushSource(
     name="titanic_survive_push_source",
