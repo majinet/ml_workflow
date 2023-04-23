@@ -110,7 +110,6 @@ titanic_target_fv = FeatureView(
     source=titanic_train_target_source,
 )
 
-"""
 # This groups features into a model version
 titanic_survive_svc_v1 = FeatureService(
     name="titanic_survive_svc_v1",
@@ -122,31 +121,15 @@ titanic_survive_svc_v1 = FeatureService(
 )
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--minio-access-key",
-                        type=str,
-                        help="Minio Access Key")
-    parser.add_argument("--minio-secret-key",
-                        type=str,
-                        help='Minio Secret Key')
-    parsed_args, _ = parser.parse_known_args()
 
     fs = FeatureStore(repo_path="feature_repo")
     fs.apply(
-        [titanic_train_pca_source, titanic_train_target_source, titanic_train_source, passenger, titanic_train_pca_fv,
-         titanic_train_fv, titanic_target_fv, titanic_survive_svc_v1],
+        [passenger, titanic_train_pca_fv, titanic_train_fv, titanic_target_fv, titanic_survive_svc_v1],
         partial=False,
     )
 
-    client = Minio(
-        "minio.kubeflow.svc.cluster.local:9000",
-        access_key=parsed_args.minio_access_key,
-        secret_key=parsed_args.minio_secret_key,
-        secure=False,
-    )
 
-    client.fput_object("demo-bucket", "feature_store.yaml", "feature_repo/feature_store.yaml")
-
+"""
 # Defines a way to push data (to be available offline, online or both) into Feast.
 titanic_survive_push_source = PushSource(
     name="titanic_survive_push_source",

@@ -20,8 +20,9 @@ spec:
       containers:
       - name: feast-apply
         image: majinetudacitylearn/feast_apply:v0.0.1
-        command: [ "/bin/bash" ]
-        args: [ "-c", "feast apply" ]
+        command:
+          - "python3"
+          - "titanic_repo.py"
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-data
