@@ -61,7 +61,7 @@ def export_model(model_dir: str,export_bucket: str,model_name: str,model_version
     from botocore.client import Config
     s3 = boto3.client(
         "s3",
-        endpoint_url=s3_endpoint,
+        endpoint_url=f"http://{s3_endpoint}",
         aws_access_key_id=minio_access_key,
         aws_secret_access_key=minio_secret_key,
         config=Config(signature_version="s3v4"),
