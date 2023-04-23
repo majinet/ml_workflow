@@ -1,6 +1,8 @@
 FROM python:3.9-slim-buster
 #FROM python:3.9-alpine
 
+RUN pip3 install minio feast[redis] psycopg2-binary isoduration --upgrade --user
+
 WORKDIR titanic_feature
 
 COPY ./titanic_feature .
