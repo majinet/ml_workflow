@@ -1,7 +1,7 @@
 FROM python:3.9-slim-buster
 #FROM python:3.9-alpine
 
-RUN pip3 install minio feast feast-postgres isoduration --upgrade --user
+RUN pip3 install minio feast[postgres] isoduration --upgrade --user
 
 WORKDIR titanic_feature
 
