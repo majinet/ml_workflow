@@ -21,4 +21,4 @@ spec:
   predictor:
     tensorflow:
       serviceAccountName: minio-fullaccess
-      storageUri: "s3://demo-bucket/model"
+      storageUri: "s3://demo-bucket/models/titanic/1"
