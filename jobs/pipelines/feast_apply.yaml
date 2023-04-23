@@ -21,21 +21,8 @@ spec:
       - name: feast-apply
         image: majinetudacitylearn/feast_apply:v0.0.1
         command:
-          - "python3"
-          - "titanic_repo.py"
-          - "--minio-access-key=$(MINIO_ACCESS_KEY_ID)"
-          - "--minio-secret-key=$(MINIO_SECRET_ACCESS_KEY)"
-        env:
-          - name: MINIO_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: minio-secret
-                key: AWS_ACCESS_KEY_ID
-          - name: MINIO_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: minio-secret
-                key: AWS_SECRET_ACCESS_KEY
+          - "feast"
+          - "apply"
         imagePullPolicy: Always
         volumeMounts:
         - name: pvc-data
