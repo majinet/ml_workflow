@@ -55,7 +55,7 @@ Core Components:
 - [Kubeflow Pipeline](pipelines)
 - Feast (Feature Store)
 - Docker & Docker Hub (Container Image Registry)
-- Minio (Object Store)
+- [Minio (Object Store)](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/minio)
 - KATib (Hyperparameters Tuning)
 - [GitHub & GitHub Actions](.github/workflows)
 
