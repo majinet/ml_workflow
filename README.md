@@ -52,7 +52,7 @@ Some common tools used in CI for Machine Learning include Jenkins, Travis CI, Ci
 Core Components:
 
 - Kubernetes
-- [Kubeflow Pipeline](pipelines/Readme.md)
+- [Kubeflow Pipeline](pipelines)
 - Feast (Feature Store)
 - Docker & Docker Hub (Container Image Registry)
 - Minio (Object Store)
