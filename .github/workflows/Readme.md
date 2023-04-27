@@ -12,6 +12,8 @@ For example, I have built
 - one workflow for creating pipeline components in the format of Docker images for data processing.
 - one workflow for running ML/AI data processing such as data cleaning, feature engineering, etc.
 
+I have created Kubernetes Jobs to execute Kubeflow Pipelines in yaml and GitHub Actions will execute these jobs using "kubectl apply -f"
+
 ![Alt text](../../screens/github-action-workflow-1.png "Workflows")
 
 Each Job have several steps to execute in sequential.
