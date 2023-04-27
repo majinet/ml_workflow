@@ -57,7 +57,7 @@ Core Components:
 - Docker & Docker Hub (Container Image Registry)
 - Minio (Object Store)
 - KATib (Hyperparameters Tuning)
-- GitHub & GitHub Actions
+- [GitHub & GitHub Actions](.github)
 
 
 ### Why Cloud Native Computing Foundation (CNCF) Compliance tools are important to MLOps
