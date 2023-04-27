@@ -51,7 +51,7 @@ Some common tools used in CI for Machine Learning include Jenkins, Travis CI, Ci
 
 Core Components:
 
-- [Kubernetes](https://github.com/majinet/terraform_prov_aws_k8s/microk8s)
+- [Kubernetes](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/microk8s)
 - [Kubeflow Pipeline](pipelines)
 - Feast (Feature Store)
 - Docker & Docker Hub (Container Image Registry)
