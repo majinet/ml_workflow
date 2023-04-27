@@ -19,5 +19,6 @@ Each Job have several steps to execute in sequential.
 ![Alt text](../../screens/github-action-workflow-3.png "Steps")
 
 After steps were processed completedly, Job will mark as completed.
+
 ![Alt text](../../screens/github-action-workflow-2.png "Jobs")
 
