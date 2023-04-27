@@ -8,9 +8,16 @@ GitHub Actions includes a marketplace of pre-built actions that can be easily in
 
 GitHub Actions also includes features such as environment variables, caching, and artifacts, which allow workflows to be customized and optimized for specific use cases. Additionally, GitHub Actions integrates with GitHub's security features, allowing developers to add automated security checks to their workflows.
 
+For example, I have built 
+- one workflow for creating pipeline components in the format of Docker images for data processing.
+- one workflow for running ML/AI data processing such as data cleaning, feature engineering, etc.
 
-![Alt text](../../screens/github-action-workflow-1.png "Github Actions")
+![Alt text](../../screens/github-action-workflow-1.png "Workflows")
 
-![Alt text](../../screens/github-action-workflow-2.png "Workflows")
+Each Job have several steps to execute in sequential.
 
-![Alt text](../../screens/github-action-workflow-3.png "Step")
+![Alt text](../../screens/github-action-workflow-3.png "Steps")
+
+After steps were processed completedly, Job will mark as completed.
+![Alt text](../../screens/github-action-workflow-2.png "Jobs")
+
