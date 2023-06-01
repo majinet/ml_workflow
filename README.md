@@ -58,6 +58,7 @@ Core Components:
 - [Minio (Object Store)](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/minio)
 - KATib (Hyperparameters Tuning)
 - [GitHub & GitHub Actions](.github/workflows)
+- [Elastic Stack](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/eck)
 
 
 ### Why Cloud Native Computing Foundation (CNCF) Compliance tools are important to MLOps
@@ -124,19 +125,16 @@ Resource Efficiency: Containers allow for more efficient use of resources, such 
 Overall, containerization infrastructure provides a more efficient and streamlined way to develop, test, and deploy machine learning systems, leading to faster time-to-market and increased agility.
 
 
-### What is right size for DevOps team?
+### What is right size for MLOps team?
 
-DevOps team members consist of :
-- Cloud Engineers
-- Network Engineers
-- Developers (Java, Python)
-- Operators (operate and monitor system)
-- Security experts
-- Database Administrators
-- Quality Assurance Engineers
-- DevOps Engineers / Automation experts
-- Solution Architects
+MLOps team members consist of :
 - Project Managers
+- Cloud Architects (AWS, Network, Security, Kubernetes, Kafka)
+- DevOps/Machine Learning Engineers (CI/CD, Docker, Elastic Stack, Kubeflow Pipelines, KATib, Feast, Minio, Terraform, Python, Java, SQL, KServe)
+- Data Engineers (Kafka)
+- Quality Assurance Engineers
+- Operators (operate and monitor system)
+
 
 ## Continuous Deployment (CD)
 
