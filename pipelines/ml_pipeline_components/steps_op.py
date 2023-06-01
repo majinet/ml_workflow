@@ -7,6 +7,19 @@ def startup_check():
     print("startup check")
 
 def load_parquet_from_minio(output_path: OutputPath(str), filename: str, minio_access_key: str, minio_secret_key: str):
+    """
+    Loads a Parquet file from Minio and saves it to the specified path.
+
+    Args:
+        output_path (kfp.components.OutputPath(str)): The path to the output Parquet file.
+        filename (str): The name of the Parquet file to load from Minio.
+        minio_access_key (str): The access key for the Minio instance.
+        minio_secret_key (str): The secret key for the Minio instance.
+
+    Returns:
+        None
+    """
+
     import os
     from minio import Minio
     from minio.error import S3Error
