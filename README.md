@@ -60,6 +60,8 @@ Core Components:
 - KATib (Hyperparameters Tuning)
 - [GitHub & GitHub Actions](.github/workflows)
 - [Elastic Stack](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/eck)
+- Kafka (Event distributed Streaming)
+- ELK Stack (Observability)
 
 
 ### Why Cloud Native Computing Foundation (CNCF) Compliance tools are important to MLOps
