@@ -59,9 +59,8 @@ Core Components:
 - [Minio (Object Store)](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/minio)
 - KATib (Hyperparameters Tuning)
 - [GitHub & GitHub Actions](.github/workflows)
-- [Elastic Stack](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/eck)
+- [Elastic Stack](https://github.com/majinet/terraform_prov_aws_k8s/tree/main/eck) (Observability)
 - Kafka (Event distributed Streaming)
-- ELK Stack (Observability)
 
 
 ### Why Cloud Native Computing Foundation (CNCF) Compliance tools are important to MLOps
