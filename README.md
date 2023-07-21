@@ -46,7 +46,9 @@ The goal of continuous integration is to catch potential errors or issues early 
 Some common tools used in CI for Machine Learning include Jenkins, Travis CI, CircleCI, GitLab CI/CD, and GitHub Actions. These tools provide an easy and automated way to perform the build, test, and deployment steps required for Machine Learning DevOps.
 
 
-### Overall Architecture
+### Overall Architecture for Open Source
+
+For AWS solutions, refer to [AWS Architecture](https://github.com/majinet/provision_mlops_aws)
 
 ![Alt text](screens/Overall_Arch.jpg "CI Platform")
 
